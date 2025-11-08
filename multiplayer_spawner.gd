@@ -16,6 +16,6 @@ func spawn_player(id: int) -> void:
 	
 	get_node(spawn_path).call_deferred("add_child", player)
 	
-func despawn_player(player_node):
+func despawn_player(_player_node):
 	print('need to find a way to despawn')
 	

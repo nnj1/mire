@@ -6,5 +6,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var shader_material : ShaderMaterial = get_node('Fog layer/Fog').material
+	# show FPS on UI
+	get_node("UI/fps").text = "FPS: " + str(Engine.get_frames_per_second())
+	
+	# TODO: fuck with the fog shader
+	var _shader_material : ShaderMaterial = get_node('Fog layer/Fog').material
 	#shader_material.set_shader_parameter("smoke_color", Color(1.0, 0.0, 0.0))
+	

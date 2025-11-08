@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ywll0o8s0esf"
+path="res://.godot/imported/Unholy UI - Souls (6).wav-8a4d1abc301eb5abe84e34bc2d0725f6.sample"
+
+[deps]
+
+source_file="res://assets/Be Not Afraid UI/--Unholy/Souls/Unholy UI - Souls (6).wav"
+dest_files=["res://.godot/imported/Unholy UI - Souls (6).wav-8a4d1abc301eb5abe84e34bc2d0725f6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

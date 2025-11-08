@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dts0eeemk46k3"
+path="res://.godot/imported/22LR Single Isolated WAV.wav-cacce83d7bc0b7dafd57c71dc334cc95.sample"
+
+[deps]
+
+source_file="res://assets/Snake's Authentic Gun Sounds/22LR Single Isolated WAV.wav"
+dest_files=["res://.godot/imported/22LR Single Isolated WAV.wav-cacce83d7bc0b7dafd57c71dc334cc95.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

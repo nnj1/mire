@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b71nqw6n4indg"]
+
+[ext_resource type="Script" uid="uid://cr33soc5ndqr6" path="res://transition.gd" id="1_2gi1b"]
+
+[node name="TransitionLayer" type="CanvasLayer"]
+layer = 4
+script = ExtResource("1_2gi1b")
+
+[node name="Fader" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 649.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

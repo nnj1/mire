@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcqbvje23h8lk"]
+[gd_scene load_steps=11 format=3 uid="uid://bcqbvje23h8lk"]
 
 [ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://game.gd" id="1_qr50u"]
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://csjvcxecatlvs" path="res://shaders/fog.gdshader" id="4_u8hns"]
 [ext_resource type="Script" uid="uid://k8e8dc51hlbv" path="res://multiplayer_spawner.gd" id="5_7jktm"]
 [ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
+[ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://daynightcycle.gd" id="7_eow3j"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0u30s"]
 noise_type = 0
@@ -47,9 +48,16 @@ offset_top = 28.0
 offset_right = 43.0
 offset_bottom = 51.0
 
+[node name="fps" type="Label" parent="UI"]
+offset_left = 1078.0
+offset_top = 2.0
+offset_right = 1149.0
+offset_bottom = 25.0
+
 [node name="Fog layer" type="CanvasLayer" parent="."]
 
 [node name="Fog" type="ColorRect" parent="Fog layer"]
+visible = false
 material = SubResource("ShaderMaterial_i6k3k")
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,5 +75,7 @@ modulate = Color(0.136826, 0.136826, 0.136826, 1)
 [node name="CharacterBody2D" parent="enemies" instance=ExtResource("6_ryrav")]
 position = Vector2(985, 530)
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="daynightcycle" type="CanvasModulate" parent="."]
 color = Color(0.111197, 0.111197, 0.111197, 1)
+script = ExtResource("7_eow3j")
+current_time_hour = 18.0
