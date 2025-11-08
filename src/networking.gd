@@ -51,4 +51,5 @@ func start_client():
 		print("Error setting up client peer: ", error)
 		return false
 	multiplayer.multiplayer_peer = peer
+	
 	return true

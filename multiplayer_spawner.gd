@@ -13,7 +13,7 @@ func spawn_player(id: int) -> void:
 	
 	var player: Node = network_player.instantiate()
 	player.name = str(id)
-
+	
 	get_node(spawn_path).call_deferred("add_child", player)
 	
 func despawn_player(player_node):
