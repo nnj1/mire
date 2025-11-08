@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcqbvje23h8lk"]
+[gd_scene load_steps=10 format=3 uid="uid://bcqbvje23h8lk"]
 
-[ext_resource type="Script" path="res://game.gd" id="1_qr50u"]
+[ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://game.gd" id="1_qr50u"]
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
 [ext_resource type="Texture2D" uid="uid://cm3vkt6ub80vo" path="res://assets/ground.jpeg" id="3_7jets"]
-[ext_resource type="Shader" path="res://shaders/fog.gdshader" id="4_u8hns"]
+[ext_resource type="Shader" uid="uid://csjvcxecatlvs" path="res://shaders/fog.gdshader" id="4_u8hns"]
+[ext_resource type="Script" uid="uid://k8e8dc51hlbv" path="res://multiplayer_spawner.gd" id="5_7jktm"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0u30s"]
 noise_type = 0
@@ -15,23 +16,18 @@ noise = SubResource("FastNoiseLite_0u30s")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i6k3k"]
 shader = ExtResource("4_u8hns")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_42188")
 shader_parameter/smoke_color = Color(0.497474, 0.497474, 0.497473, 1)
 shader_parameter/distortion_speed = 0.05
 shader_parameter/density = 0.1
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_42188")
 
 [sub_resource type="Environment" id="Environment_w5w8y"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qr50u")
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("2_jd5xs")]
-modulate = Color(0.408329, 0.408329, 0.408329, 1)
-z_index = 1
-position = Vector2(576, 324)
-
 [node name="Ground" type="Sprite2D" parent="."]
-modulate = Color(0.262932, 0.262932, 0.262932, 1)
+self_modulate = Color(0.133196, 0.133196, 0.133196, 1)
 position = Vector2(213, 158)
 texture = ExtResource("3_7jets")
 
@@ -49,3 +45,27 @@ grow_vertical = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_w5w8y")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="role" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="id" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 28.0
+offset_right = 43.0
+offset_bottom = 51.0
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://xxpj67mfe006")
+spawn_path = NodePath("..")
+script = ExtResource("5_7jktm")
+network_player = ExtResource("2_jd5xs")

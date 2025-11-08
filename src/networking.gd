@@ -24,3 +24,24 @@ func dir_contents(path):
 		#print("An error occurred when trying to access the path.")
 		pass
 	return files
+	
+var peer = ENetMultiplayerPeer
+const PORT = 9999
+const ADDRESS = "localhost"
+var ROLE = null
+
+var connected_peer_ids = []
+var local_player_character
+var UniquePeerID : String
+
+func start_server() -> void:
+	Networking.ROLE = 'Server'
+	peer = ENetMultiplayerPeer.new()
+	peer.create_server(PORT)
+	multiplayer.multiplayer_peer = peer
+	
+func start_client() -> void:
+	Networking.ROLE = 'Client'
+	peer = ENetMultiplayerPeer.new()
+	peer.create_client(ADDRESS, PORT)
+	multiplayer.multiplayer_peer = peer

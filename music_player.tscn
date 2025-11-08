@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bpi2yw62atfl7"]
 
-[ext_resource type="Script" path="res://music_player.gd" id="1_f6ayd"]
+[ext_resource type="Script" uid="uid://cuawfs2vhpdue" path="res://music_player.gd" id="1_f6ayd"]
 
 [sub_resource type="AudioStream" id="AudioStream_yg2t4"]
 
 [node name="MusicPlayer" type="AudioStreamPlayer"]
 stream = SubResource("AudioStream_yg2t4")
+volume_db = 1.0
 script = ExtResource("1_f6ayd")

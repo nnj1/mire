@@ -1,6 +1,6 @@
-[gd_scene load_steps=88 format=3 uid="uid://xxpj67mfe006"]
+[gd_scene load_steps=89 format=3 uid="uid://xxpj67mfe006"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_q2kef"]
+[ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
 [ext_resource type="Texture2D" uid="uid://bfg5hc4yxq212" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_1.png" id="2_1tsxn"]
 [ext_resource type="Texture2D" uid="uid://bt1wwstaoingd" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_2.png" id="3_jaoft"]
@@ -371,6 +371,20 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_htija"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("PointLight2D:enabled")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("AnimatedSprite2D:animation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_q2kef")
@@ -379,6 +393,7 @@ script = ExtResource("1_q2kef")
 shape = SubResource("CircleShape2D_4wbpv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.336608, 0.336608, 0.336608, 1)
 position = Vector2(56, 4)
 sprite_frames = SubResource("SpriteFrames_f0t5t")
 animation = &"handgun_shoot"
@@ -395,3 +410,6 @@ rotation = -1.5708
 energy = 2.0
 texture = ExtResource("42_mlakk")
 texture_scale = 15.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_htija")
