@@ -24,6 +24,10 @@ MusicPlayer="*res://music_player.tscn"
 
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom="uid://cy7la85y8cpuj"
+
 [input]
 
 ui_left={

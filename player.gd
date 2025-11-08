@@ -51,10 +51,14 @@ func _process(delta: float) -> void:
 	
 	# adjust animation
 	if velocity != Vector2.ZERO:
-		# The object is moving
+		# The player is moving
+		if not get_node('walkingSound').playing:
+			get_node('walkingSound').play()
 		get_node("AnimatedSprite2D").play('flashlight_move')
 	else:
+		get_node('walkingSound').stop()
 		get_node("AnimatedSprite2D").play('flashlight_idle')
+		
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return

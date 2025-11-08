@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://xxpj67mfe006"]
+[gd_scene load_steps=90 format=3 uid="uid://xxpj67mfe006"]
 
 [ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
@@ -85,6 +85,7 @@
 [ext_resource type="Texture2D" uid="uid://c06horwajjf70" path="res://assets/Top_Down_Survivor/handgun/shoot/survivor-shoot_handgun_0.png" id="82_pxtnx"]
 [ext_resource type="Texture2D" uid="uid://1h4kf1uislje" path="res://assets/Top_Down_Survivor/handgun/shoot/survivor-shoot_handgun_1.png" id="83_otpbe"]
 [ext_resource type="Texture2D" uid="uid://2reuuvd8kcv5" path="res://assets/Top_Down_Survivor/handgun/shoot/survivor-shoot_handgun_2.png" id="84_ff0ht"]
+[ext_resource type="AudioStream" uid="uid://ur0674xr80qf" path="res://assets/horror_sfx_vol_2/Gravel Footsteps/Gravel Footsteps (1).mp3" id="86_he65s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wbpv"]
 radius = 82.0061
@@ -396,20 +397,23 @@ shape = SubResource("CircleShape2D_4wbpv")
 self_modulate = Color(0.336608, 0.336608, 0.336608, 1)
 position = Vector2(56, 4)
 sprite_frames = SubResource("SpriteFrames_f0t5t")
-animation = &"handgun_shoot"
+animation = &"flashlight_idle"
 autoplay = "flashlight_idle"
-frame = 2
-frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(1680, 4)
+position = Vector2(1662.22, -10.1475)
 rotation = -1.5708
-energy = 2.0
+scale = Vector2(0.913367, 1.01054)
+energy = 5.0
 texture = ExtResource("42_mlakk")
 texture_scale = 15.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_htija")
+
+[node name="walkingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("86_he65s")
+volume_db = 2.0

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ch74k5ry4yudj"
+path="res://.godot/imported/Mud Footsteps (8).mp3-213b22a081ce81796cd80817ee4ed0f2.mp3str"
+
+[deps]
+
+source_file="res://assets/horror_sfx_vol_2/Mud foosteps/Mud Footsteps (8).mp3"
+dest_files=["res://.godot/imported/Mud Footsteps (8).mp3-213b22a081ce81796cd80817ee4ed0f2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -26,8 +26,8 @@ func dir_contents(path):
 	return files
 	
 var peer = ENetMultiplayerPeer
-const PORT = 9999
-const ADDRESS = "localhost"
+var PORT = 9999
+var ADDRESS = "localhost"
 var ROLE = null
 
 var connected_peer_ids = []
@@ -40,8 +40,15 @@ func start_server() -> void:
 	peer.create_server(PORT)
 	multiplayer.multiplayer_peer = peer
 	
-func start_client() -> void:
+func start_client():
 	Networking.ROLE = 'Client'
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client(ADDRESS, PORT)
+	
+	# TODO: get this working
+	var error = peer.create_client(ADDRESS, PORT)
+	if error != OK:
+		# Handle immediate creation errors (e.g., ERR_ALREADY_IN_USE)
+		print("Error setting up client peer: ", error)
+		return false
 	multiplayer.multiplayer_peer = peer
+	return true

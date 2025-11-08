@@ -4,6 +4,7 @@ extends MultiplayerSpawner
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(spawn_player)
+	multiplayer.peer_disconnected.connect(despawn_player)
 	
 	spawn_player(1)
 
@@ -14,3 +15,7 @@ func spawn_player(id: int) -> void:
 	player.name = str(id)
 
 	get_node(spawn_path).call_deferred("add_child", player)
+	
+func despawn_player(player_node):
+	print('need to find a way to despawn')
+	
