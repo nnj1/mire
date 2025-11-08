@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cm3vkt6ub80vo" path="res://assets/ground.jpeg" id="3_7jets"]
 [ext_resource type="Shader" uid="uid://csjvcxecatlvs" path="res://shaders/fog.gdshader" id="4_u8hns"]
 [ext_resource type="Script" uid="uid://k8e8dc51hlbv" path="res://multiplayer_spawner.gd" id="5_7jktm"]
+[ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0u30s"]
 noise_type = 0
@@ -17,34 +18,16 @@ noise = SubResource("FastNoiseLite_0u30s")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i6k3k"]
 shader = ExtResource("4_u8hns")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_42188")
-shader_parameter/smoke_color = Color(1, 1, 1, 1)
+shader_parameter/smoke_color = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/distortion_speed = 0.05
 shader_parameter/density = 0.1
-
-[sub_resource type="Environment" id="Environment_w5w8y"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qr50u")
 
 [node name="Ground" type="Sprite2D" parent="."]
-self_modulate = Color(0.0562916, 0.0562916, 0.0562916, 1)
 position = Vector2(213, 158)
 texture = ExtResource("3_7jets")
-
-[node name="Fog" type="ColorRect" parent="Ground"]
-material = SubResource("ShaderMaterial_i6k3k")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1920.0
-offset_top = -1080.0
-offset_right = -1920.0
-offset_bottom = -1080.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_w5w8y")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://xxpj67mfe006")
@@ -63,3 +46,26 @@ offset_left = 3.0
 offset_top = 28.0
 offset_right = 43.0
 offset_bottom = 51.0
+
+[node name="Fog layer" type="CanvasLayer" parent="."]
+
+[node name="Fog" type="ColorRect" parent="Fog layer"]
+material = SubResource("ShaderMaterial_i6k3k")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1707.0
+offset_top = -922.0
+offset_right = 986.0
+offset_bottom = 575.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="enemies" type="Node2D" parent="."]
+modulate = Color(0.136826, 0.136826, 0.136826, 1)
+
+[node name="CharacterBody2D" parent="enemies" instance=ExtResource("6_ryrav")]
+position = Vector2(985, 530)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.111197, 0.111197, 0.111197, 1)

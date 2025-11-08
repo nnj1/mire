@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
 @export var speed = 50
+var input_direction: Vector2
+var front_direction: Vector2
+var target_angle
 var run_modifier = 1
 var inventory_items = ['flashlight', 'handgun', 'knife', 'rifle', 'shotgun']
 var current_inventory_item_index = 0
@@ -37,14 +40,20 @@ func _input(event: InputEvent) -> void:
 			get_node('PointLight2D').enabled = true
 	
 func get_input():
-	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if Input.is_action_pressed("run"):
 		run_modifier = 2
 	else:
 		run_modifier = 1
-	var front_direction = (get_global_mouse_position() - self.position).normalized()
-	velocity = front_direction * input_direction.dot(Vector2.UP)  * speed * run_modifier
-		
+	front_direction = (get_global_mouse_position() - self.position).normalized()
+	
+	# TODO: some complex shit with mouse look i'm still working on
+	#velocity = front_direction * input_direction.dot(Vector2.UP)  * speed * run_modifier
+	#velocity += Vector2.LEFT * input_direction.dot(Vector2.LEFT) * speed / 2 
+	#velocity += Vector2.RIGHT * input_direction.dot(Vector2.RIGHT) * speed / 2
+	
+	velocity = input_direction * speed * run_modifier
+	
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
@@ -71,7 +80,7 @@ func _process(delta: float) -> void:
 	if mouse_in_window:
 		var direction_to_target = get_global_mouse_position() - self.global_position
 		# 1. Calculate the target angle (in radians)
-		var target_angle = direction_to_target.angle() 
+		target_angle = direction_to_target.angle() 
 		# 2. Lerp the current rotation angle toward the target angle
 		rotation = lerp_angle(rotation, target_angle, 6 * delta)
 		#look_at(look_mouse_position)
@@ -89,9 +98,23 @@ func _process(delta: float) -> void:
 			if not get_node('walkingSound').playing:
 				get_node('walkingSound').play()
 			get_node("AnimatedSprite2D").play(inventory_items[current_inventory_item_index] + '_move')
+			if run_modifier != 1:
+				get_node("AnimatedSprite2D2").play('run')
+				get_node('walkingSound').volume_db = 3
+				get_node('walkingSound').pitch_scale = 1.2
+			elif run_modifier == 1:
+				if abs(input_direction.dot(Vector2.LEFT)) > abs(input_direction.dot(Vector2.UP)):
+					get_node("AnimatedSprite2D2").play('strafe_left')
+				elif abs(input_direction.dot(Vector2.RIGHT)) > abs(input_direction.dot(Vector2.UP)):
+					get_node("AnimatedSprite2D2").play('strafe_right')
+				else:
+					get_node("AnimatedSprite2D2").play('walk')
+				get_node('walkingSound').volume_db = 2
+				get_node('walkingSound').pitch_scale = 1
 		else:
 			get_node('walkingSound').stop()
 			get_node("AnimatedSprite2D").play(inventory_items[current_inventory_item_index] + '_idle')
+			get_node("AnimatedSprite2D2").play('idle')
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
