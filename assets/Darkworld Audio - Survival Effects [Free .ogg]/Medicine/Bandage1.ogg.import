@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://1k2nyuhxnjie"
+path="res://.godot/imported/Bandage1.ogg-0d9ad3a9a602f4f6059cfe86093ebd98.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Medicine/Bandage1.ogg"
+dest_files=["res://.godot/imported/Bandage1.ogg-0d9ad3a9a602f4f6059cfe86093ebd98.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

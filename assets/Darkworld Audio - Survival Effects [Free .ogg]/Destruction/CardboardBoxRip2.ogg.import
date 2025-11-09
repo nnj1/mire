@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://xgor47483qqq"
+path="res://.godot/imported/CardboardBoxRip2.ogg-6bc9db5856a1e668a7ba7875eae2b659.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Destruction/CardboardBoxRip2.ogg"
+dest_files=["res://.godot/imported/CardboardBoxRip2.ogg-6bc9db5856a1e668a7ba7875eae2b659.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

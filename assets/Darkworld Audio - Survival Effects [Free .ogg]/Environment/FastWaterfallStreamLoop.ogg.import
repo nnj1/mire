@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://1i21cqywhq7y"
+path="res://.godot/imported/FastWaterfallStreamLoop.ogg-d7360fb9756f9ffac14d3123632ed4ae.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Environment/FastWaterfallStreamLoop.ogg"
+dest_files=["res://.godot/imported/FastWaterfallStreamLoop.ogg-d7360fb9756f9ffac14d3123632ed4ae.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

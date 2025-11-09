@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dig0v77b1t481"
+path="res://.godot/imported/PlasticBox2.ogg-2656c70de6f93c910928e297afe1882c.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Equipment/PlasticBox2.ogg"
+dest_files=["res://.godot/imported/PlasticBox2.ogg-2656c70de6f93c910928e297afe1882c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

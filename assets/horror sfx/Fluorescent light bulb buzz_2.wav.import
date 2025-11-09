@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cmc5dcc7t7t2k"
+path="res://.godot/imported/Fluorescent light bulb buzz_2.wav-3eb471f0e8fde1e1c3c9814285a9ef0e.sample"
+
+[deps]
+
+source_file="res://assets/horror sfx/Fluorescent light bulb buzz_2.wav"
+dest_files=["res://.godot/imported/Fluorescent light bulb buzz_2.wav-3eb471f0e8fde1e1c3c9814285a9ef0e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

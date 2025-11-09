@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ciemelrsfwqo8"
+path="res://.godot/imported/HumanBreathingOut1.ogg-14b3ffea13a7180112206c2e453411ae.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanBreathingOut1.ogg"
+dest_files=["res://.godot/imported/HumanBreathingOut1.ogg-14b3ffea13a7180112206c2e453411ae.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

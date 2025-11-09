@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://di2t4cgrr831"
+path="res://.godot/imported/DesignedPickaxe2.ogg-ff7d174ecf0b332b42fc4fdc6550d0eb.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Tools/DesignedPickaxe2.ogg"
+dest_files=["res://.godot/imported/DesignedPickaxe2.ogg-ff7d174ecf0b332b42fc4fdc6550d0eb.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

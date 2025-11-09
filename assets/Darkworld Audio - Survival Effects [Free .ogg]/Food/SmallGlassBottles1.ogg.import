@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://divu1xgwqevr2"
+path="res://.godot/imported/SmallGlassBottles1.ogg-ed9371e0679e4cf16c2829810ad5bcce.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Food/SmallGlassBottles1.ogg"
+dest_files=["res://.godot/imported/SmallGlassBottles1.ogg-ed9371e0679e4cf16c2829810ad5bcce.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

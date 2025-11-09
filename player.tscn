@@ -1,4 +1,4 @@
-[gd_scene load_steps=435 format=3 uid="uid://xxpj67mfe006"]
+[gd_scene load_steps=445 format=3 uid="uid://xxpj67mfe006"]
 
 [ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
@@ -425,8 +425,16 @@
 [ext_resource type="Texture2D" uid="uid://c4fp3u1tm35pj" path="res://assets/Top_Down_Survivor/feet/walk/survivor-walk_17.png" id="423_82xwt"]
 [ext_resource type="Texture2D" uid="uid://vqirpog2adai" path="res://assets/Top_Down_Survivor/feet/walk/survivor-walk_18.png" id="424_xt0ep"]
 [ext_resource type="Texture2D" uid="uid://4yv6iwsscl1i" path="res://assets/Top_Down_Survivor/feet/walk/survivor-walk_19.png" id="425_bqcxy"]
-[ext_resource type="AudioStream" uid="uid://fkqt04ircph4" path="res://assets/Snake's Authentic Gun Sounds/Reloads, Cycling & More/MP3/Single Shot Reload Full MP3.mp3" id="426_5aul4"]
 [ext_resource type="AudioStream" uid="uid://c3ms8ykedok6g" path="res://assets/gunreload.wav" id="426_5ew75"]
+[ext_resource type="AudioStream" uid="uid://diqlhqbw41pge" path="res://assets/Snake's SECOND Authentic Gun Sounds/Isolated/9mm/MP3/9mm Single Isolated.mp3" id="427_5aul4"]
+[ext_resource type="AudioStream" uid="uid://majrcllsvjwf" path="res://assets/Snake's SECOND Authentic Gun Sounds/Isolated/20 Gauge/MP3/20 Gauge Single Isolated.mp3" id="428_l1vf5"]
+[ext_resource type="AudioStream" uid="uid://cddanevthllk2" path="res://assets/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/MP3/9mm Spray.mp3" id="429_3wqh0"]
+[ext_resource type="AudioStream" uid="uid://cxbpl1ak6x0ja" path="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured1.ogg" id="430_vefwd"]
+[ext_resource type="AudioStream" uid="uid://dhut1d2flawb3" path="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanBreathingOut3.ogg" id="431_3ofe5"]
+[ext_resource type="AudioStream" uid="uid://b0ultw5468ukp" path="res://assets/horror sfx/Breathing_slow.wav" id="432_2vsto"]
+[ext_resource type="AudioStream" uid="uid://dp2b8gwjr7c1d" path="res://assets/horror sfx/Flashlight on.wav" id="432_u4v43"]
+[ext_resource type="AudioStream" uid="uid://nd5scofelrk8" path="res://assets/horror sfx/Breathing_fast.wav" id="433_aoemw"]
+[ext_resource type="AudioStream" uid="uid://cmc5dcc7t7t2k" path="res://assets/horror sfx/Fluorescent light bulb buzz_2.wav" id="435_ob5km"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wbpv"]
 radius = 82.0061
@@ -1914,8 +1922,94 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": [{
 "end_offset": 0.0,
-"start_offset": 0.1042,
-"stream": ExtResource("426_5aul4")
+"start_offset": 0.0,
+"stream": ExtResource("427_5aul4")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_l1vf5"]
+resource_name = "shotgun_shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [&"shotgun_shoot", &"shotgun_shoot"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 2]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("shootSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("428_l1vf5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_vefwd"]
+resource_name = "rifle_shoot"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [&"rifle_shoot", &"rifle_shoot"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 2]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("shootSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("429_3wqh0")
 }],
 "times": PackedFloat32Array(0)
 }
@@ -1924,7 +2018,9 @@ tracks/2/use_blend = true
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l1vf5"]
 _data = {
 &"RESET": SubResource("Animation_5aul4"),
-&"handgun_shoot": SubResource("Animation_5ew75")
+&"handgun_shoot": SubResource("Animation_5ew75"),
+&"rifle_shoot": SubResource("Animation_vefwd"),
+&"shotgun_shoot": SubResource("Animation_l1vf5")
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
@@ -1964,6 +2060,7 @@ replication_config = SubResource("SceneReplicationConfig_htija")
 [node name="walkingSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("86_he65s")
 volume_db = 2.0
+bus = &"Sound"
 
 [node name="spotlight" type="PointLight2D" parent="."]
 scale = Vector2(4, 4)
@@ -1980,5 +2077,37 @@ libraries = {
 
 [node name="shootSound" type="AudioStreamPlayer2D" parent="."]
 volume_db = 10.0
+bus = &"Sound"
 
 [node name="gruntSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("430_vefwd")
+volume_db = 10.0
+bus = &"Sound"
+
+[node name="breathingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("431_3ofe5")
+pitch_scale = 0.5
+bus = &"Sound"
+
+[node name="flashlightOnSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("432_u4v43")
+volume_db = 1.0
+bus = &"Sound"
+
+[node name="breathingSlowSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("432_2vsto")
+bus = &"Sound"
+
+[node name="breathingFastSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("433_aoemw")
+bus = &"Sound"
+
+[node name="flashlightOffSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("432_u4v43")
+volume_db = 1.0
+bus = &"Sound"
+
+[node name="flashlightHumSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("435_ob5km")
+volume_db = -10.0
+bus = &"Sound"

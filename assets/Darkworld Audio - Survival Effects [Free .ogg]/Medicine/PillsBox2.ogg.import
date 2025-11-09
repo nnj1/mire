@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://1qnskywacwv0"
+path="res://.godot/imported/PillsBox2.ogg-ac920e92949297c2215609a52e9ff0eb.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Medicine/PillsBox2.ogg"
+dest_files=["res://.godot/imported/PillsBox2.ogg-ac920e92949297c2215609a52e9ff0eb.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

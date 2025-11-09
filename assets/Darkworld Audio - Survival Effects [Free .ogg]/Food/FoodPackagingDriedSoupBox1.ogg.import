@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://gtp1xpudsypm"
+path="res://.godot/imported/FoodPackagingDriedSoupBox1.ogg-c868e53c170b452a7bde4d2971997857.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Food/FoodPackagingDriedSoupBox1.ogg"
+dest_files=["res://.godot/imported/FoodPackagingDriedSoupBox1.ogg-c868e53c170b452a7bde4d2971997857.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bt5ifqok2qgew"
+path="res://.godot/imported/LargeGlassMirrorCrunch2.ogg-6a6157245311d4b7f2992bc411358a21.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Destruction/LargeGlassMirrorCrunch2.ogg"
+dest_files=["res://.godot/imported/LargeGlassMirrorCrunch2.ogg-6a6157245311d4b7f2992bc411358a21.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

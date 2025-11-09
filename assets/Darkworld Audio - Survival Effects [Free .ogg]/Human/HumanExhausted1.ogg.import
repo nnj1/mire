@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dypkhdentoe50"
+path="res://.godot/imported/HumanExhausted1.ogg-f817bcfd26fd029b1ec79c9e2a0f3a5e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanExhausted1.ogg"
+dest_files=["res://.godot/imported/HumanExhausted1.ogg-f817bcfd26fd029b1ec79c9e2a0f3a5e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

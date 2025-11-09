@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bp8dp8w20lvyp"
+path="res://.godot/imported/BeeBuzz.ogg-553dfef4335b9172862f0877ccb1ccc2.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Environment/BeeBuzz.ogg"
+dest_files=["res://.godot/imported/BeeBuzz.ogg-553dfef4335b9172862f0877ccb1ccc2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

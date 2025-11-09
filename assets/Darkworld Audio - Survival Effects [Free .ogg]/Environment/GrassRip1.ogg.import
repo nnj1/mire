@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cbadcxj7db06q"
+path="res://.godot/imported/GrassRip1.ogg-f7f01c6b6544709487ec5362dbe4ef6d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Environment/GrassRip1.ogg"
+dest_files=["res://.godot/imported/GrassRip1.ogg-f7f01c6b6544709487ec5362dbe4ef6d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

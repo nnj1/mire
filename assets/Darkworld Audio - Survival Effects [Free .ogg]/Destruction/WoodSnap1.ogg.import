@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://yipq2upibbhe"
+path="res://.godot/imported/WoodSnap1.ogg-6d8965a49cae06f2b87a0a8b3f794672.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Destruction/WoodSnap1.ogg"
+dest_files=["res://.godot/imported/WoodSnap1.ogg-6d8965a49cae06f2b87a0a8b3f794672.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

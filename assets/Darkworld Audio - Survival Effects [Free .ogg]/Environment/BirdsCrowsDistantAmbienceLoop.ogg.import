@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c8uyq7efpu07"
+path="res://.godot/imported/BirdsCrowsDistantAmbienceLoop.ogg-33bef2760d8ff51f8212287519e62493.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Environment/BirdsCrowsDistantAmbienceLoop.ogg"
+dest_files=["res://.godot/imported/BirdsCrowsDistantAmbienceLoop.ogg-33bef2760d8ff51f8212287519e62493.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

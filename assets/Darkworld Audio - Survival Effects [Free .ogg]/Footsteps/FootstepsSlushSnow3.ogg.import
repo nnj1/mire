@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cl8no6v14jlx"
+path="res://.godot/imported/FootstepsSlushSnow3.ogg-d9cde5f5e1aadd6fcd4f3b50298fd7d2.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Footsteps/FootstepsSlushSnow3.ogg"
+dest_files=["res://.godot/imported/FootstepsSlushSnow3.ogg-d9cde5f5e1aadd6fcd4f3b50298fd7d2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

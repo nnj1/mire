@@ -18,6 +18,7 @@ enum States {IDLE, WALKING, RUNNING, RELOADING, INTERACTING}
 var state: States = States.IDLE
 var body_animation_player: Node2D
 var feet_animation_player: Node2D
+var advanced_animation_player: AnimationPlayer
 
 # state machine for shooting and melee
 enum CombatStates {NONE, SHOOTING, MELEE}
@@ -33,9 +34,22 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 	
 	if previous_combat_state != new_combat_state or not force:
 		if combat_state == CombatStates.SHOOTING:
-			body_animation_player.play(inventory_items[current_inventory_item_index] + '_shoot')
+			if advanced_animation_player.has_animation(inventory_items[current_inventory_item_index] + '_shoot'):
+				if not advanced_animation_player.is_playing():
+					advanced_animation_player.play(inventory_items[current_inventory_item_index] + '_shoot')
+					
+					# for single shot weapons, leave the state after firing (not the case for automatic)
+					if inventory_items[current_inventory_item_index] == 'handgun':
+						set_state(CombatStates.NONE)
+					if inventory_items[current_inventory_item_index] == 'shotgun':
+						set_state(CombatStates.NONE)
+					
 		elif combat_state == CombatStates.MELEE:
-			get_node('gruntSound').play()
+			if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index] + '_meleeattack'):
+				#if not body_animation_player.is_playing():
+				body_animation_player.play(inventory_items[current_inventory_item_index] + '_meleeattack')
+				# TODO: get melee sound effect
+				#get_node('gruntSound').play()
 			
 func set_state(new_state: int, force: bool = false) -> void:
 	var previous_state := state
@@ -48,13 +62,17 @@ func set_state(new_state: int, force: bool = false) -> void:
 	# only do animation stuff if the state has changed to a different one
 	if previous_state != new_state or not force:
 		if state == States.IDLE:
-			body_animation_player.play(inventory_items[current_inventory_item_index] + '_idle')
+			if combat_state == CombatStates.NONE:
+				body_animation_player.play(inventory_items[current_inventory_item_index] + '_idle')
 			feet_animation_player.play('idle')
 			get_node('walkingSound').stop()
 			get_node('reloadSound').stop()
+			if not get_node('breathingSlowSound').playing:
+				get_node('breathingSlowSound').play()
 		elif state == States.WALKING:
 			run_modifier = 1
-			body_animation_player.play(inventory_items[current_inventory_item_index] + '_move')
+			if combat_state == CombatStates.NONE:	
+				body_animation_player.play(inventory_items[current_inventory_item_index] + '_move')
 			if abs(input_direction.dot(Vector2.LEFT)) > abs(input_direction.dot(Vector2.UP)):
 				feet_animation_player.play('strafe_left')
 			elif abs(input_direction.dot(Vector2.RIGHT)) > abs(input_direction.dot(Vector2.UP)):
@@ -65,9 +83,12 @@ func set_state(new_state: int, force: bool = false) -> void:
 			get_node('walkingSound').pitch_scale = 1
 			if not get_node('walkingSound').playing:
 				get_node('walkingSound').play()
+			if not get_node('breathingFastSound').playing:
+				get_node('breathingFastSound').play()
 		elif state == States.RUNNING:
 			run_modifier = 2
-			body_animation_player.play(inventory_items[current_inventory_item_index] + '_move')
+			if combat_state == CombatStates.NONE:
+				body_animation_player.play(inventory_items[current_inventory_item_index] + '_move')
 			#TODO: find a way to dynamically adjust the strafe animation to be faster
 			if abs(input_direction.dot(Vector2.LEFT)) > abs(input_direction.dot(Vector2.UP)):
 				feet_animation_player.play('strafe_left')
@@ -79,6 +100,9 @@ func set_state(new_state: int, force: bool = false) -> void:
 			get_node('walkingSound').pitch_scale = 1.2
 			if not get_node('walkingSound').playing:
 				get_node('walkingSound').play()
+			get_node('breathingSound').pitch_scale = 0.5
+			if not get_node('breathingSound').playing:
+				get_node('breathingSound').play()
 		elif state == States.RELOADING:
 			if body_animation_player.get_animation() != inventory_items[current_inventory_item_index] + '_reload':
 				if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index] + '_reload'):
@@ -94,6 +118,8 @@ func _ready() -> void:
 	# fill up global variables
 	body_animation_player = get_node("AnimatedSprite2D")
 	feet_animation_player = get_node("AnimatedSprite2D2")
+	advanced_animation_player = get_node("AnimationPlayer")
+	
 	# Check if this instance is controlled by the current local peer
 	if is_multiplayer_authority():
 		# Enable the Camera2D for the local player instance
@@ -111,6 +137,7 @@ func _input(event: InputEvent) -> void:
 		# OPTIONAL: auto turn on flashlight if you switch to it
 		if inventory_items[current_inventory_item_index] == 'flashlight':
 			get_node('PointLight2D').enabled = true
+			get_node("flashlightOnSound").play()
 		# call set state with the same state to get the animations to be consistent with flashlight
 		set_state(state, true)
 	if Input.is_action_just_released("scroll_down") and not event.ctrl_pressed:
@@ -120,9 +147,10 @@ func _input(event: InputEvent) -> void:
 		# auto turn on flashlight if you switch to it
 		if inventory_items[current_inventory_item_index] == 'flashlight':
 			get_node('PointLight2D').enabled = true
+			get_node("flashlightOnSound").play()
 		# call set state with the same state to get the animations to be consistent with flashlight
 		set_state(state, true)
-	
+		
 # for state and animation dependeing things
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -142,8 +170,18 @@ func _process(delta: float) -> void:
 		get_node('PointLight2D').enabled = false
 	# if user is on flashlight, handle toggling it when flashlight key is pressed
 	if Input.is_action_just_released("flashlight") and inventory_items[current_inventory_item_index] == 'flashlight':
+		if get_node('PointLight2D').enabled:
+			get_node("flashlightOffSound").play()
+		else:
+			get_node("flashlightOnSound").play()
 		get_node('PointLight2D').enabled = !get_node('PointLight2D').enabled
-	
+		
+	# play flashlight hum if flashlight is on
+	if inventory_items[current_inventory_item_index] == 'flashlight' and get_node('PointLight2D').enabled:
+		if not get_node('flashlightHumSound').playing:
+			get_node('flashlightHumSound').play()
+	else:
+		get_node('flashlightHumSound').stop()
 	# Handle rotation of the user based on mouse cursor position
 	# Get the global position of the mouse cursor
 	var _look_mouse_position = get_global_mouse_position()
@@ -156,12 +194,10 @@ func _process(delta: float) -> void:
 		rotation = lerp_angle(rotation, target_angle, 6 * delta)
 		#look_at(look_mouse_position)		
 
-
 func _physics_process(_delta):
 	if not is_multiplayer_authority(): return
 	get_input()
 	move_and_slide()
-	
 	
 # for dealing with movement input
 func get_input():
@@ -175,9 +211,17 @@ func get_input():
 	
 	#if not Input.is_action_pressed("reload"):
 	velocity = input_direction * speed * run_modifier
+	
 	#else:
 		#velocity = Vector2.ZERO
 	#	pass
+	
+	# add recoil if shooting
+	if combat_state == CombatStates.SHOOTING:
+		if inventory_items[current_inventory_item_index] == 'shotgun':
+			velocity += front_direction * - 20
+		if inventory_items[current_inventory_item_index] == 'rifle':
+			velocity += front_direction * - 15
 	
 	if velocity != Vector2.ZERO:
 		if Input.is_action_pressed("run"):
@@ -190,3 +234,16 @@ func get_input():
 		else:
 			set_state(States.IDLE)
 	
+	# TODO: shooting should only work if using a weapon that can shoot
+	if Input.is_action_pressed("shoot"):
+		set_combat_state(CombatStates.SHOOTING)
+	if Input.is_action_just_released("shoot"):
+		set_combat_state(CombatStates.NONE)
+		
+	# TODO: melee should only work if using a weapon that can melee
+	if Input.is_action_pressed("melee"):
+		set_combat_state(CombatStates.MELEE)
+	if Input.is_action_just_released("melee"):
+		set_combat_state(CombatStates.NONE)
+	
+	#print(combat_state)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dyk1yutgefsyp"
+path="res://.godot/imported/FootstepsDryBeachTwigs2.ogg-622e31bd618ef0f5d31312d28cc7f674.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Footsteps/FootstepsDryBeachTwigs2.ogg"
+dest_files=["res://.godot/imported/FootstepsDryBeachTwigs2.ogg-622e31bd618ef0f5d31312d28cc7f674.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cr5ltq3452kfy"
+path="res://.godot/imported/FootstepsStoneDirt1.ogg-7ab510e54f2368687132355fa864bf12.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Footsteps/FootstepsStoneDirt1.ogg"
+dest_files=["res://.godot/imported/FootstepsStoneDirt1.ogg-7ab510e54f2368687132355fa864bf12.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

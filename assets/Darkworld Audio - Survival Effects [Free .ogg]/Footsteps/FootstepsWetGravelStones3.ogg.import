@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dg7i13b1djc88"
+path="res://.godot/imported/FootstepsWetGravelStones3.ogg-ff31efe94cdba887b15978e44dbf2b64.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Footsteps/FootstepsWetGravelStones3.ogg"
+dest_files=["res://.godot/imported/FootstepsWetGravelStones3.ogg-ff31efe94cdba887b15978e44dbf2b64.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

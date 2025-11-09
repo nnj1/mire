@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dgv2xerkyvtkd"
+path="res://.godot/imported/LargeBagHandling2.ogg-b337c0beb1f5d25b5886f6373291baa4.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Equipment/LargeBagHandling2.ogg"
+dest_files=["res://.godot/imported/LargeBagHandling2.ogg-b337c0beb1f5d25b5886f6373291baa4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

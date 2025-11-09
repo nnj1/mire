@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bymfamdbmbf56"
+path="res://.godot/imported/HumanInjured4.ogg-e1d5a4448681bd5c4192ecb56771a74b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured4.ogg"
+dest_files=["res://.godot/imported/HumanInjured4.ogg-e1d5a4448681bd5c4192ecb56771a74b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

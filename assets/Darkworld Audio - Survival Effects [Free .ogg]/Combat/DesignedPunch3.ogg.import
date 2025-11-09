@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://kbxc4v7na640"
+path="res://.godot/imported/DesignedPunch3.ogg-2304d3b21588eafbafd5242eff2dfbda.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Combat/DesignedPunch3.ogg"
+dest_files=["res://.godot/imported/DesignedPunch3.ogg-2304d3b21588eafbafd5242eff2dfbda.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

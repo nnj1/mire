@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://8ylfyyl0ps38"
+path="res://.godot/imported/WoodLogHandling1.ogg-2dfcc0a6406bcc1aa4ccf3af8f4ffbe4.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Environment/WoodLogHandling1.ogg"
+dest_files=["res://.godot/imported/WoodLogHandling1.ogg-2dfcc0a6406bcc1aa4ccf3af8f4ffbe4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

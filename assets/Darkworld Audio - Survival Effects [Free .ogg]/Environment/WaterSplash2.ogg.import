@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bfvrcbhcrmygk"
+path="res://.godot/imported/WaterSplash2.ogg-70a9393ec2f6f78543acb1e35e7a9ea0.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Environment/WaterSplash2.ogg"
+dest_files=["res://.godot/imported/WaterSplash2.ogg-70a9393ec2f6f78543acb1e35e7a9ea0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

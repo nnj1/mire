@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dj31njsgpyig4"
+path="res://.godot/imported/DesignedGunshot_Pistol3_Reverb.ogg-342b28d6ad30c8ac62e85676113526d9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Combat/DesignedGunshot_Pistol3_Reverb.ogg"
+dest_files=["res://.godot/imported/DesignedGunshot_Pistol3_Reverb.ogg-342b28d6ad30c8ac62e85676113526d9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
