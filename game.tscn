@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
 [ext_resource type="Texture2D" uid="uid://cm3vkt6ub80vo" path="res://assets/ground.jpeg" id="3_7jets"]
 [ext_resource type="Shader" uid="uid://csjvcxecatlvs" path="res://shaders/fog.gdshader" id="4_u8hns"]
-[ext_resource type="Script" uid="uid://k8e8dc51hlbv" path="res://multiplayer_spawner.gd" id="5_7jktm"]
+[ext_resource type="Script" uid="uid://k8e8dc51hlbv" path="res://src/multiplayer_spawner.gd" id="5_7jktm"]
 [ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
-[ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://daynightcycle.gd" id="7_eow3j"]
+[ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://src/daynightcycle.gd" id="7_eow3j"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0u30s"]
 noise_type = 0

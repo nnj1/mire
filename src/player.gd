@@ -1,5 +1,11 @@
 extends CharacterBody2D
 
+# file paths for hurt sounds
+var hurt_sounds = [preload('res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured1.ogg'),
+				 preload('res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured2.ogg'),
+				preload('res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured3.ogg'),
+				preload('res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured4.ogg')]
+
 # variables for walking and running and turning direction with mouse
 @export var speed = 50
 var input_direction: Vector2
@@ -86,8 +92,11 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 					var first_object = get_node('RayCast2D').get_collider()
 					if first_object:
 						if first_object.has_method('take_damage'):
-							print('Would apply damage here')
-					
+							if not is_multiplayer_authority():
+								first_object.take_damage.rpc_id(1, 10, int(name))
+							else:
+								first_object.take_damage(10, int(name))
+								
 					# for single shot weapons, leave the state after firing (not the case for automatic)
 					if inventory_items[current_inventory_item_index].name == 'handgun':
 						set_state(CombatStates.NONE)
@@ -161,6 +170,24 @@ func set_state(new_state: int, force: bool = false) -> void:
 						get_node('reloadSound').play()
 			feet_animation_player.play('idle')
 
+# function for taking damage	
+# This function can be called by any peer, but will execute on the authority (server)
+@rpc("authority", "reliable")
+func take_damage(damage_amount: int, source_peer_id: int) -> void:
+	print(str(name) + ' just took damage from ' + str(source_peer_id))
+	# do other server side game state shit here
+	play_hit_animation.rpc()
+	
+@rpc("any_peer", "reliable")
+func play_hit_animation():
+	get_node('Camera2D').add_trauma(0.5)
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.RED, 0.25)
+	tween.tween_property(self, "modulate", Color(1,1,1), 0.25)
+	if not get_node('hurtSound').playing:
+		get_node('hurtSound').stream = hurt_sounds.pick_random()
+		get_node('hurtSound').play()
+		
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
@@ -211,7 +238,7 @@ func _input(event: InputEvent) -> void:
 	main_game_node.update_inventory(inventory_items)
 	
 	
-# for state and animation dependeing things
+# for state and animation dependent things
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	

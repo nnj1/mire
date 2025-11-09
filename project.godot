@@ -18,9 +18,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-UiPlayer="*res://ui_player.tscn"
+UiPlayer="*res://global_scenes/ui_player.tscn"
 Networking="*res://src/networking.gd"
-MusicPlayer="*res://music_player.tscn"
+MusicPlayer="*res://global_scenes/music_player.tscn"
 
 [display]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=446 format=3 uid="uid://xxpj67mfe006"]
 
-[ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://player.gd" id="1_q2kef"]
+[ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://src/player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
 [ext_resource type="Texture2D" uid="uid://bfg5hc4yxq212" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_1.png" id="2_1tsxn"]
 [ext_resource type="Texture2D" uid="uid://bt1wwstaoingd" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_2.png" id="3_jaoft"]
@@ -342,7 +342,7 @@
 [ext_resource type="Texture2D" uid="uid://vdcg6uw5vwwq" path="res://assets/Top_Down_Survivor/shotgun/shoot/survivor-shoot_shotgun_0.png" id="323_a7eoh"]
 [ext_resource type="Texture2D" uid="uid://bingxic35rnky" path="res://assets/Top_Down_Survivor/shotgun/shoot/survivor-shoot_shotgun_1.png" id="324_x2cns"]
 [ext_resource type="Texture2D" uid="uid://ucsdw2kd70eq" path="res://assets/Top_Down_Survivor/shotgun/shoot/survivor-shoot_shotgun_2.png" id="325_axrdw"]
-[ext_resource type="Script" uid="uid://bgtshfxmehko3" path="res://camera_2d.gd" id="341_bspgw"]
+[ext_resource type="Script" uid="uid://bgtshfxmehko3" path="res://src/camera_2d.gd" id="341_bspgw"]
 [ext_resource type="Texture2D" uid="uid://mmgekklumn1y" path="res://assets/spotlight.webp" id="343_ofmv8"]
 [ext_resource type="Texture2D" uid="uid://bqqnqdosu620m" path="res://assets/Top_Down_Survivor/feet/idle/survivor-idle_0.png" id="345_hrrqc"]
 [ext_resource type="Texture2D" uid="uid://c2q15vqgoajhw" path="res://assets/Top_Down_Survivor/feet/run/survivor-run_0.png" id="346_5ew75"]
@@ -1867,6 +1867,12 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("GPUParticles2D:emitting")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath("hurtSound:playing")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:modulate")
+properties/8/spawn = true
+properties/8/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_5aul4"]
 length = 0.001
@@ -2189,3 +2195,5 @@ process_material = SubResource("ParticleProcessMaterial_ob5km")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(2312, 0)
 collide_with_areas = true
+
+[node name="hurtSound" type="AudioStreamPlayer2D" parent="."]

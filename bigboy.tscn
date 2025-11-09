@@ -1,6 +1,6 @@
 [gd_scene load_steps=86 format=3 uid="uid://bndy4nvd0b52m"]
 
-[ext_resource type="Script" uid="uid://dl3ato8gs8tdw" path="res://bigboy.gd" id="1_wcnrk"]
+[ext_resource type="Script" uid="uid://dl3ato8gs8tdw" path="res://src/bigboy.gd" id="1_wcnrk"]
 [ext_resource type="Texture2D" uid="uid://c88cq4hgypot1" path="res://assets/Creature Idle/IDLE (1).png" id="2_6qrdn"]
 [ext_resource type="Texture2D" uid="uid://bkuxcyqny81q8" path="res://assets/Creature Idle/IDLE (2).png" id="3_kt70q"]
 [ext_resource type="Texture2D" uid="uid://cmp0p7ni3a0a3" path="res://assets/Creature Idle/IDLE (3).png" id="4_fppbq"]
