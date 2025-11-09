@@ -174,7 +174,7 @@ func set_state(new_state: int, force: bool = false) -> void:
 # This function can be called by any peer, but will execute on the authority (server)
 @rpc("authority", "reliable")
 func take_damage(damage_amount: int, source_peer_id: int) -> void:
-	print(str(name) + ' just took damage from ' + str(source_peer_id))
+	print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
 	# do other server side game state shit here
 	play_hit_animation.rpc()
 	
@@ -256,7 +256,7 @@ func _process(delta: float) -> void:
 	if inventory_items[current_inventory_item_index].name != 'flashlight':
 		get_node('PointLight2D').enabled = false
 	# if user is on flashlight, handle toggling it when flashlight key is pressed
-	if Input.is_action_just_released("flashlight") and inventory_items[current_inventory_item_index].name == 'flashlight':
+	if not main_game_node.typing_chat and Input.is_action_just_released("flashlight") and inventory_items[current_inventory_item_index].name == 'flashlight':
 		if get_node('PointLight2D').enabled:
 			get_node("flashlightOffSound").play()
 		else:
@@ -288,49 +288,50 @@ func _physics_process(_delta):
 	
 # for dealing with movement input
 func get_input():
-	input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	front_direction = (get_global_mouse_position() - self.position).normalized()
-	
-	# TODO: some complex shit with mouse look i'm still working on
-	#velocity = front_direction * input_direction.dot(Vector2.UP)  * speed * run_modifier
-	#velocity += Vector2.LEFT * input_direction.dot(Vector2.LEFT) * speed / 2 
-	#velocity += Vector2.RIGHT * input_direction.dot(Vector2.RIGHT) * speed / 2
-	
-	#if not Input.is_action_pressed("reload"):
-	velocity = input_direction * speed * run_modifier
-	
-	#else:
-		#velocity = Vector2.ZERO
-	#	pass
-	
-	# add recoil if shooting
-	if combat_state == CombatStates.SHOOTING:
-		if inventory_items[current_inventory_item_index].name == 'shotgun':
-			velocity += front_direction * - 20
-		if inventory_items[current_inventory_item_index].name == 'rifle':
-			velocity += front_direction * - 15
-	
-	if velocity != Vector2.ZERO:
-		if Input.is_action_pressed("run"):
-			set_state(States.RUNNING)
-		else:
-			set_state(States.WALKING)
-	else:
-		if Input.is_action_pressed("reload"):
-			set_state(States.RELOADING)
-		else:
-			set_state(States.IDLE)
-	
-	# TODO: shooting should only work if using a weapon that can shoot
-	if Input.is_action_pressed("shoot"):
-		set_combat_state(CombatStates.SHOOTING)
-	if Input.is_action_just_released("shoot"):
-		set_combat_state(CombatStates.NONE)
+	if not main_game_node.typing_chat:
+		input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		front_direction = (get_global_mouse_position() - self.position).normalized()
 		
-	# TODO: melee should only work if using a weapon that can melee
-	if Input.is_action_pressed("melee"):
-		set_combat_state(CombatStates.MELEE)
-	if Input.is_action_just_released("melee"):
-		set_combat_state(CombatStates.NONE)
+		# TODO: some complex shit with mouse look i'm still working on
+		#velocity = front_direction * input_direction.dot(Vector2.UP)  * speed * run_modifier
+		#velocity += Vector2.LEFT * input_direction.dot(Vector2.LEFT) * speed / 2 
+		#velocity += Vector2.RIGHT * input_direction.dot(Vector2.RIGHT) * speed / 2
+		
+		#if not Input.is_action_pressed("reload"):
+		velocity = input_direction * speed * run_modifier
+		
+		#else:
+			#velocity = Vector2.ZERO
+		#	pass
+		
+		# add recoil if shooting
+		if combat_state == CombatStates.SHOOTING:
+			if inventory_items[current_inventory_item_index].name == 'shotgun':
+				velocity += front_direction * - 20
+			if inventory_items[current_inventory_item_index].name == 'rifle':
+				velocity += front_direction * - 15
+		
+		if velocity != Vector2.ZERO:
+			if Input.is_action_pressed("run"):
+				set_state(States.RUNNING)
+			else:
+				set_state(States.WALKING)
+		else:
+			if Input.is_action_pressed("reload"):
+				set_state(States.RELOADING)
+			else:
+				set_state(States.IDLE)
+		
+		# TODO: shooting should only work if using a weapon that can shoot
+		if Input.is_action_pressed("shoot"):
+			set_combat_state(CombatStates.SHOOTING)
+		if Input.is_action_just_released("shoot"):
+			set_combat_state(CombatStates.NONE)
+			
+		# TODO: melee should only work if using a weapon that can melee
+		if Input.is_action_pressed("melee"):
+			set_combat_state(CombatStates.MELEE)
+		if Input.is_action_just_released("melee"):
+			set_combat_state(CombatStates.NONE)
 	
 	#print(combat_state)

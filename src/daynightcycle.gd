@@ -24,7 +24,6 @@ const MIDNIGHT_START_HOUR: float = 22.0 # 10:00 PM (Transition to Sunrise begins
 # Time duration for smooth transitions in hours
 const TRANSITION_DURATION: float = 2.0 
 
-
 func _ready():
 	# Set the authority to the server (peer ID 1)
 	set_multiplayer_authority(1)

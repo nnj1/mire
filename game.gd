@@ -1,6 +1,7 @@
 extends Node2D
 
 const INVENTORY_SLOT = preload("res://slot.tscn")
+var typing_chat: bool = false
 
 func _ready() -> void:
 	get_node('UI/role').text = Networking.ROLE
@@ -15,6 +16,11 @@ func update_inventory(inventory) -> void:
 		var slot = INVENTORY_SLOT.instantiate()
 		slot.prepare(item)
 		get_node('UI/inventory').add_child(slot)
+		
+func _input(_event: InputEvent):
+	if Input.is_action_just_released("chat"):
+		get_node('UI/VBoxContainer/chatinput').grab_focus()
+		typing_chat = true
 	
 func _process(_delta: float) -> void:
 	# show FPS on UI
@@ -24,5 +30,27 @@ func _process(_delta: float) -> void:
 	var _shader_material : ShaderMaterial = get_node('Fog layer/Fog').material
 	#shader_material.set_shader_parameter("smoke_color", Color(1.0, 0.0, 0.0))
 	
-	
-	
+func _on_chatinput_focus_entered() -> void:
+	# When TextEdit gains focus, disable player input handling
+	typing_chat = true
+
+func _on_chatinput_focus_exited() -> void:
+	# When TextEdit loses focus, re-enable player input handling
+	typing_chat = false
+
+func _on_chatinput_text_submitted(new_text: String) -> void:
+	if new_text != '':
+		if not is_multiplayer_authority():
+			send_chat.rpc_id(1, new_text, multiplayer.get_unique_id())
+		else:
+			send_chat(new_text, multiplayer.get_unique_id())
+		get_node('UI/VBoxContainer/chatinput').text = ''
+	get_node('UI/VBoxContainer/chatinput').release_focus()
+	typing_chat = false
+
+func _on_chatbox_ready() -> void:
+	get_node('UI/VBoxContainer/chatbox').set_multiplayer_authority(1)
+
+@rpc('any_peer', 'unreliable_ordered')
+func send_chat(new_text, id):
+	get_node('UI/VBoxContainer/chatbox').text += '\n' + str(id) + ':  '+ new_text
