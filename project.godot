@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 UiPlayer="*res://ui_player.tscn"
 Networking="*res://src/networking.gd"
 MusicPlayer="*res://music_player.tscn"
-Transition="*res://transition.tscn"
 
 [display]
 

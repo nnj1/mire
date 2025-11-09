@@ -3,6 +3,7 @@ extends MultiplayerSpawner
 @export var network_player: PackedScene
 
 func _ready() -> void:
+		
 	multiplayer.peer_connected.connect(spawn_player)
 	multiplayer.peer_disconnected.connect(despawn_player)
 	

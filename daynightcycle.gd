@@ -26,10 +26,13 @@ const TRANSITION_DURATION: float = 2.0
 
 
 func _ready():
+	# Set the authority to the server (peer ID 1)
+	set_multiplayer_authority(1)
 	# Ensure the speed multiplier is calculated at start
 	time_speed_multiplier = 24.0 / day_length_in_seconds
 
 func _process(delta: float):
+	if not is_multiplayer_authority(): return
 	# 1. Update In-Game Time
 	current_time_hour += delta * time_speed_multiplier
 	# Wrap time around to 24 hours

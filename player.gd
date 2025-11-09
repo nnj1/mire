@@ -89,7 +89,7 @@ func set_state(new_state: int, force: bool = false) -> void:
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
-	
+
 func _ready() -> void:
 	# fill up global variables
 	body_animation_player = get_node("AnimatedSprite2D")

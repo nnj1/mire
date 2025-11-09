@@ -1,55 +1,72 @@
 extends CanvasLayer
 
-# The duration of the fade animation in seconds.
 const FADE_TIME = 0.5 
 
-@onready var fader: ColorRect = $Fader
-@onready var tween: Tween
+# Only reference the ColorRect, which is the object being animated.
+@onready var fader: ColorRect = $Fader 
 
-# Called to instantly hide the fade overlay (set its alpha to 0).
 func _ready():
-	tween = get_tree().create_tween()
-	# Start fully transparent so the scene is visible immediately
+	# Start fully transparent.
 	fader.color.a = 0.0
 
 # ------------------------------------
 # FADE-OUT: Hides the current scene
 # ------------------------------------
 func fade_out():
-	# Ensure the Tween is ready to go
-	if tween:
-		tween.kill() # Stop any previous tween operation
-		
-	# Start at the current alpha and tween it to fully opaque (alpha 1.0)
-	tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	# CREATE the TWEEN LOCALLY
+	var current_tween = create_tween()
 	
-	# 1. Animate the ColorRect's alpha from 0.0 to 1.0 (fully black)
-	tween.tween_property(fader, "color:a", 1.0, FADE_TIME)
+	# Configure and add the tweener. It starts automatically.
+	current_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	current_tween.tween_property(fader, "color:a", 1.0, FADE_TIME)
 	
-	# 2. Wait for the fade out to complete
-	await tween.finished
+	# Wait for the animation to finish.
+	await current_tween.finished
 	
-	# The scene is now completely blacked out.
-	return true # Signal that the fade-out is complete
+	return true
 
 # ------------------------------------
 # FADE-IN: Reveals the new scene
 # ------------------------------------
 func fade_in():
-	# Ensure the Tween is ready to go
-	if tween:
-		tween.kill() 
-		
-	# Start fully opaque and tween it to transparent (alpha 0.0)
-	tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	# CREATE the TWEEN LOCALLY
+	var current_tween = create_tween()
 	
-	# 1. Animate the ColorRect's alpha from 1.0 to 0.0 (fully transparent)
-	tween.tween_property(fader, "color:a", 0.0, FADE_TIME)
+	# Configure and add the tweener. It starts automatically.
+	current_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	current_tween.tween_property(fader, "color:a", 0.0, FADE_TIME)
 	
-	# 2. Wait for the fade in to complete
-	await tween.finished
+	# Wait for the animation to finish.
+	await current_tween.finished
 	
-	# The new scene is now visible.
-	return true # Signal that the fade-in is complete
+	return true
+
+# ------------------------------------
+# Unified Transition Function (Updated)
+# ------------------------------------
+func transition_to_scene(path: String):
+	# 1. Fade out the current scene
+	await fade_out()
+	
+	# 2. Change the scene while the screen is black
+	var error = get_tree().change_scene_to_file(path)
+	
+	if error != OK:
+		print("ERROR: Could not load scene at path: ", path)
+		await fade_in() 
+		return
+
+	# 3. CRITICAL STEP: Wait for the scene tree change to finalize.
+	# This fires AFTER the new root has been set and the new scene's _ready() 
+	# functions have executed, meaning all nodes (including MultiplayerSpawner) 
+	# should be attached and ready for processing.
+	await get_tree().tree_changed
+	
+	# Optional but often helpful for networking: wait one more frame
+	# to ensure all initial network processing has a chance to run.
+	await get_tree().process_frame
+	
+	# 4. Fade in to reveal the new scene
+	await fade_in()
+	
+	print("Transition complete and new scene is fully loaded.")
