@@ -5,4 +5,4 @@
 [resource]
 default_base_scale = 2.0
 default_font = ExtResource("1_e7bfs")
-default_font_size = 25
+default_font_size = 20

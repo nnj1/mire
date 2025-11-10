@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcqbvje23h8lk"]
+[gd_scene load_steps=14 format=3 uid="uid://bcqbvje23h8lk"]
 
 [ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://game.gd" id="1_qr50u"]
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
 [ext_resource type="Texture2D" uid="uid://cm3vkt6ub80vo" path="res://assets/ground.jpeg" id="3_7jets"]
 [ext_resource type="Shader" uid="uid://csjvcxecatlvs" path="res://shaders/fog.gdshader" id="4_u8hns"]
 [ext_resource type="Script" uid="uid://k8e8dc51hlbv" path="res://src/multiplayer_spawner.gd" id="5_7jktm"]
+[ext_resource type="PackedScene" uid="uid://gcnhqpgb53sy" path="res://bear.tscn" id="6_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
 [ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://src/daynightcycle.gd" id="7_eow3j"]
 
@@ -124,6 +125,9 @@ grow_vertical = 2
 
 [node name="enemies" type="Node2D" parent="."]
 modulate = Color(0.136826, 0.136826, 0.136826, 1)
+
+[node name="bear" parent="enemies" instance=ExtResource("6_j5wjh")]
+position = Vector2(429, 231)
 
 [node name="CharacterBody2D" parent="enemies" instance=ExtResource("6_ryrav")]
 position = Vector2(985, 530)

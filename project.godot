@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Mire"
-config/description="Co-op survival horror"
 run/main_scene="uid://cs3icbkoc1y33"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)

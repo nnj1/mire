@@ -1,0 +1,161 @@
+[gd_scene load_steps=35 format=3 uid="uid://gcnhqpgb53sy"]
+
+[ext_resource type="Texture2D" uid="uid://boqpsxmecray1" path="res://assets/bear/bear1.png" id="1_6wldd"]
+[ext_resource type="Script" uid="uid://thdms44qhm47" path="res://src/bear.gd" id="1_gext2"]
+[ext_resource type="Texture2D" uid="uid://bf3bt5f57tq0q" path="res://assets/bear/bear2.png" id="2_vu1b7"]
+[ext_resource type="Texture2D" uid="uid://ttobf6kwicq0" path="res://assets/bear/bear3.png" id="3_gext2"]
+[ext_resource type="Texture2D" uid="uid://w0iaknv47yyr" path="res://assets/bear/bear4.png" id="4_ofe2f"]
+[ext_resource type="Texture2D" uid="uid://5ewdaceuerev" path="res://assets/bear/bear5.png" id="5_e1qhy"]
+[ext_resource type="Texture2D" uid="uid://geipb353vioe" path="res://assets/bear/bear6.png" id="6_2ntpo"]
+[ext_resource type="Texture2D" uid="uid://cv83f4yrl6jsa" path="res://assets/bear/bear7.png" id="7_rr0gg"]
+[ext_resource type="Texture2D" uid="uid://beoyb0ydbub4y" path="res://assets/bear/bear8.png" id="8_xdpts"]
+[ext_resource type="Texture2D" uid="uid://23clwhas1i6d" path="res://assets/bear/bear9.png" id="9_yya65"]
+[ext_resource type="Texture2D" uid="uid://rnfdmu1wpn4x" path="res://assets/bear/bear10.png" id="10_gqcil"]
+[ext_resource type="Texture2D" uid="uid://mu7m0jxrnoep" path="res://assets/bear/bear11.png" id="11_0tj32"]
+[ext_resource type="Texture2D" uid="uid://rq6wa8c34wwf" path="res://assets/bear/bear12.png" id="12_rw8un"]
+[ext_resource type="Texture2D" uid="uid://bj0vh2i5ejwlb" path="res://assets/bear/bear13.png" id="13_5egws"]
+[ext_resource type="Texture2D" uid="uid://dvpu4c0y07f5h" path="res://assets/bear/bear14.png" id="14_xud57"]
+[ext_resource type="Texture2D" uid="uid://b5bnn67f4gq3o" path="res://assets/bear/bear15.png" id="15_2opkw"]
+[ext_resource type="Texture2D" uid="uid://c7pi8sfid0s3h" path="res://assets/bear/bear16.png" id="16_fsgpc"]
+[ext_resource type="Texture2D" uid="uid://c66sh4tvy8ngh" path="res://assets/bear/bear17.png" id="17_nosy2"]
+[ext_resource type="Texture2D" uid="uid://dpbtl2cjoijy5" path="res://assets/bear/bear18.png" id="18_stkdk"]
+[ext_resource type="Texture2D" uid="uid://dismkm0ywemsh" path="res://assets/bear/bear19.png" id="19_emx6o"]
+[ext_resource type="Texture2D" uid="uid://bwg4wdlveqrq4" path="res://assets/bear/bear20.png" id="20_qcahw"]
+[ext_resource type="Texture2D" uid="uid://caj6ucj5nockk" path="res://assets/bear/bear21.png" id="21_l5a0f"]
+[ext_resource type="Texture2D" uid="uid://bxkudtsa4c27l" path="res://assets/bear/bear22.png" id="22_sbdy2"]
+[ext_resource type="Texture2D" uid="uid://d0ksqj1vbh3a4" path="res://assets/bear/bear23.png" id="23_x8vgh"]
+[ext_resource type="Texture2D" uid="uid://3lg5w0tfrr7l" path="res://assets/bear/bear24.png" id="24_pubhf"]
+[ext_resource type="Texture2D" uid="uid://dfaiava6o6goe" path="res://assets/bear/bear25.png" id="25_qadfq"]
+[ext_resource type="Texture2D" uid="uid://bfo2o5im4uw5t" path="res://assets/bear/bear26.png" id="26_l0dj4"]
+[ext_resource type="Texture2D" uid="uid://ckesfvaudfef7" path="res://assets/bear/bear27.png" id="27_x3di8"]
+[ext_resource type="Texture2D" uid="uid://dyhrce476id6x" path="res://assets/bear/bear28.png" id="28_oo4y4"]
+[ext_resource type="Texture2D" uid="uid://bvfx76b06oovq" path="res://assets/bear/bear29.png" id="29_doo6m"]
+[ext_resource type="Texture2D" uid="uid://xo4cbhb5a5g" path="res://assets/bear/bear30.png" id="30_2ct58"]
+[ext_resource type="AudioStream" uid="uid://bkuwu0gs8kj5s" path="res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (12).mp3" id="32_gext2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w1yv7"]
+radius = 21.0
+height = 94.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x6cto"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6wldd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vu1b7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gext2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ofe2f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_e1qhy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2ntpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rr0gg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xdpts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yya65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_gqcil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0tj32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_rw8un")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5egws")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xud57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2opkw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_fsgpc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_nosy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_stkdk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_emx6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_qcahw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_l5a0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_sbdy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_x8vgh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_pubhf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_qadfq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_l0dj4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_x3di8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_oo4y4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_doo6m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_2ct58")
+}],
+"loop": false,
+"name": &"walk",
+"speed": 15.0
+}]
+
+[node name="bear" type="CharacterBody2D"]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_gext2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 5)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_w1yv7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_x6cto")
+animation = &"walk"
+frame = 2
+frame_progress = 0.668084
+
+[node name="growlSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("32_gext2")
+
+[node name="growlTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="growlTimer" to="." method="_on_timer_timeout"]
