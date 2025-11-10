@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcqbvje23h8lk"]
+[gd_scene load_steps=15 format=3 uid="uid://bcqbvje23h8lk"]
 
 [ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://game.gd" id="1_qr50u"]
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://gcnhqpgb53sy" path="res://bear.tscn" id="6_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
 [ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://src/daynightcycle.gd" id="7_eow3j"]
+[ext_resource type="Script" uid="uid://b3dr2crrj4gy0" path="res://enemy_multiplayer_spawner.gd" id="8_vef74"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_j5wjh"]
 properties/0/path = NodePath(".:text")
@@ -46,6 +47,18 @@ _spawnable_scenes = PackedStringArray("uid://xxpj67mfe006")
 spawn_path = NodePath("..")
 script = ExtResource("5_7jktm")
 network_player = ExtResource("2_jd5xs")
+
+[node name="enemies" type="Node2D" parent="."]
+modulate = Color(0.136826, 0.136826, 0.136826, 1)
+
+[node name="CharacterBody2D" parent="enemies" instance=ExtResource("6_ryrav")]
+position = Vector2(985, 530)
+
+[node name="EnemyMultiplayerSpawner" type="MultiplayerSpawner" parent="enemies"]
+_spawnable_scenes = PackedStringArray("uid://gcnhqpgb53sy")
+spawn_path = NodePath("..")
+script = ExtResource("8_vef74")
+bear_enemy_scene = ExtResource("6_j5wjh")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -122,15 +135,6 @@ offset_right = 986.0
 offset_bottom = 575.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="enemies" type="Node2D" parent="."]
-modulate = Color(0.136826, 0.136826, 0.136826, 1)
-
-[node name="bear" parent="enemies" instance=ExtResource("6_j5wjh")]
-position = Vector2(429, 231)
-
-[node name="CharacterBody2D" parent="enemies" instance=ExtResource("6_ryrav")]
-position = Vector2(985, 530)
 
 [node name="daynightcycle" type="CanvasModulate" parent="."]
 color = Color(0.111197, 0.111197, 0.111197, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://gcnhqpgb53sy"]
+[gd_scene load_steps=36 format=3 uid="uid://gcnhqpgb53sy"]
 
 [ext_resource type="Texture2D" uid="uid://boqpsxmecray1" path="res://assets/bear/bear1.png" id="1_6wldd"]
 [ext_resource type="Script" uid="uid://thdms44qhm47" path="res://src/bear.gd" id="1_gext2"]
@@ -135,6 +135,29 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gext2"]
+properties/0/path = NodePath("growlSound:playing")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("AnimatedSprite2D:animation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimatedSprite2D:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("hurtSound:playing")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:rotation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:modulate")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+
 [node name="bear" type="CharacterBody2D"]
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_gext2")
@@ -157,5 +180,11 @@ stream = ExtResource("32_gext2")
 [node name="growlTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="hurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("32_gext2")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gext2")
 
 [connection signal="timeout" from="growlTimer" to="." method="_on_timer_timeout"]

@@ -28,6 +28,22 @@ var current_speed: float = 0.0 # The speed currently being used for movement
 var time_until_change: float = 0.0
 var target_direction: Vector2 = Vector2.ZERO
 
+# function for taking damage	
+# This function can be called by any peer, but will execute on the authority (server)
+@rpc("authority", "reliable")
+func take_damage(damage_amount: int, source_peer_id: int) -> void:
+	print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
+	# do other server side game state shit here
+	# will always be called from server and will be synced across all clients
+	play_hit_animation()
+	
+func play_hit_animation():
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.RED, 0.25)
+	tween.tween_property(self, "modulate", Color(1,1,1), 0.25)
+	if not get_node('hurtSound').playing:
+		#get_node('hurtSound').stream = hurt_sounds.pick_random()
+		get_node('hurtSound').play()
 			
 func _ready():
 	# Initialize the randomizer for unique paths each run
@@ -38,6 +54,11 @@ func _ready():
 
 # All movement and timing logic goes here for physics stability
 func _physics_process(delta: float):
+	
+	# Only the server runs the game logic
+	if not is_multiplayer_authority():
+		return
+		
 	# 1. Countdown the timer
 	time_until_change -= delta
 	
@@ -69,7 +90,7 @@ func _set_new_target_direction():
 	get_node('AnimatedSprite2D').speed_scale = current_speed / SPEED
 	
 	# Generate a random angle from 0 to 45 degrees 
-	var random_angle = randf_range(0, PI/2)
+	var random_angle = randf_range(-PI/2, PI/2)
 	
 	# Convert the angle into a normalized direction vector
 	target_direction = Vector2.from_angle(random_angle)
@@ -90,6 +111,10 @@ func _smooth_rotate(delta: float):
 
 # periodic growl
 func _on_timer_timeout() -> void:
+	# Only the server runs the game logic
+	if not is_multiplayer_authority():
+		return
+		
 	get_node('growlSound').stream = growl_sounds.pick_random()
 	get_node('growlSound').play()
 	get_node('growlTimer').wait_time = randf_range(3, 8)
