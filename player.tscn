@@ -1,4 +1,4 @@
-[gd_scene load_steps=446 format=3 uid="uid://xxpj67mfe006"]
+[gd_scene load_steps=452 format=3 uid="uid://xxpj67mfe006"]
 
 [ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://src/player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
@@ -429,8 +429,9 @@
 [ext_resource type="AudioStream" uid="uid://diqlhqbw41pge" path="res://assets/Snake's SECOND Authentic Gun Sounds/Isolated/9mm/MP3/9mm Single Isolated.mp3" id="427_5aul4"]
 [ext_resource type="AudioStream" uid="uid://cddanevthllk2" path="res://assets/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/MP3/9mm Spray.mp3" id="429_3wqh0"]
 [ext_resource type="AudioStream" uid="uid://dmi2j6uv0fm5t" path="res://assets/Snake's SECOND Authentic Gun Sounds/Isolated/20 Gauge/WAV/20 Gauge Single Isolated.wav" id="429_ob5km"]
-[ext_resource type="AudioStream" uid="uid://cxbpl1ak6x0ja" path="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanInjured1.ogg" id="430_vefwd"]
+[ext_resource type="AudioStream" uid="uid://c5swqdepkhffs" path="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Combat/DesignedPunch1.ogg" id="430_ob5km"]
 [ext_resource type="AudioStream" uid="uid://dhut1d2flawb3" path="res://assets/Darkworld Audio - Survival Effects [Free .ogg]/Human/HumanBreathingOut3.ogg" id="431_3ofe5"]
+[ext_resource type="AudioStream" uid="uid://b2jnigiprc0jx" path="res://assets/knife-slash-sound-effect.mp3" id="431_hgg0t"]
 [ext_resource type="AudioStream" uid="uid://b0ultw5468ukp" path="res://assets/horror sfx/Breathing_slow.wav" id="432_2vsto"]
 [ext_resource type="AudioStream" uid="uid://dp2b8gwjr7c1d" path="res://assets/horror sfx/Flashlight on.wav" id="432_u4v43"]
 [ext_resource type="AudioStream" uid="uid://nd5scofelrk8" path="res://assets/horror sfx/Breathing_fast.wav" id="433_aoemw"]
@@ -2078,11 +2079,226 @@ tracks/3/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_hgg0t"]
+resource_name = "flashlight_meleeattack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"flashlight_meleeattack", &"flashlight_meleeattack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 14]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("meleeSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("430_ob5km")
+}],
+"times": PackedFloat32Array(0.366667)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_ovju4"]
+resource_name = "knife_meleeattack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"knife_meleeattack", &"knife_meleeattack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 14]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("meleeSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.8058,
+"start_offset": 0.6855,
+"stream": ExtResource("431_hgg0t")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_8p5u6"]
+resource_name = "handgun_meleeattack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"handgun_meleeattack", &"handgun_meleeattack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 14]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("meleeSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("430_ob5km")
+}],
+"times": PackedFloat32Array(0.366667)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_e2rfb"]
+resource_name = "shotgun_meleeattack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"shotgun_meleeattack", &"shotgun_meleeattack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 14]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("meleeSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("430_ob5km")
+}],
+"times": PackedFloat32Array(0.366667)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_nd3ta"]
+resource_name = "rifle_meleeattack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"rifle_meleeattack", &"rifle_meleeattack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 14]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("meleeSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("430_ob5km")
+}],
+"times": PackedFloat32Array(0.366667)
+}
+tracks/2/use_blend = true
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l1vf5"]
 _data = {
 &"RESET": SubResource("Animation_5aul4"),
+&"flashlight_meleeattack": SubResource("Animation_hgg0t"),
+&"handgun_meleeattack": SubResource("Animation_8p5u6"),
 &"handgun_shoot": SubResource("Animation_5ew75"),
+&"knife_meleeattack": SubResource("Animation_ovju4"),
+&"rifle_meleeattack": SubResource("Animation_nd3ta"),
 &"rifle_shoot": SubResource("Animation_vefwd"),
+&"shotgun_meleeattack": SubResource("Animation_e2rfb"),
 &"shotgun_shoot": SubResource("Animation_l1vf5")
 }
 
@@ -2149,8 +2365,7 @@ libraries = {
 volume_db = 10.0
 bus = &"Sound"
 
-[node name="gruntSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("430_vefwd")
+[node name="meleeSound" type="AudioStreamPlayer2D" parent="."]
 volume_db = 10.0
 bus = &"Sound"
 

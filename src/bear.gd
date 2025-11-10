@@ -30,8 +30,8 @@ const MIN_CHANGE_TIME = 5  # Minimum seconds before changing direction
 const MAX_CHANGE_TIME = 10  # Maximum seconds before changing direction
 
 # --- Speed Configuration ---
-const MIN_SPEED = 10.0       # Minimum movement speed in pixels/second
-const MAX_SPEED = 75.0      # Maximum movement speed in pixels/second
+var MIN_SPEED = SPEED - 40       # Minimum movement speed in pixels/second
+var MAX_SPEED = SPEED + 25     # Maximum movement speed in pixels/second
 
 # --- State Variables ---
 var current_speed: float = 0.0 # The speed currently being used for movement
@@ -81,7 +81,9 @@ func _physics_process(delta: float):
 		
 	# 3. Apply Movement
 	# The velocity is directly tied to the target direction and the current_speed
-	velocity = target_direction * current_speed
+		# if bear is aggro, he goes twice as fast
+
+	velocity = target_direction * (current_speed + 50 * int(aggro))
 	move_and_slide()
 	
 	# 4. Smooth Rotation (LERP)
@@ -99,6 +101,7 @@ func _set_new_target_direction():
 	
 	# NEW: Set a new random speed
 	current_speed = randf_range(MIN_SPEED, MAX_SPEED)
+		
 	# adjust rate of walking animation to correspond to this speed
 	get_node('AnimatedSprite2D').speed_scale = current_speed / SPEED
 	

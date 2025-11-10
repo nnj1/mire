@@ -14,6 +14,11 @@ var target_angle
 var run_modifier = 1
 var mouse_in_window = false
 
+
+# variables for customizing the mouse cursor (crosshair)
+var original_cursor_image: Image
+var current_cursor_scale: float
+
 # variables for inventory management
 var inventory_items = [
 	{
@@ -92,6 +97,13 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 					var first_object = get_node('RayCast2D').get_collider()
 					if first_object:
 						if first_object.has_method('take_damage'):
+							# do the actually shooting operation:
+							
+							# tween the cursor to register a hit
+							var tween = create_tween()
+							tween.tween_method(_set_scaled_cursor, 1, 1.5, .1)
+							tween.tween_method(_set_scaled_cursor, 1.5, 1, .2)
+							
 							if not is_multiplayer_authority():
 								first_object.take_damage.rpc_id(1, 10, int(name))
 							else:
@@ -104,11 +116,14 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 						set_state(CombatStates.NONE)
 					
 		elif combat_state == CombatStates.MELEE:
-			if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index].name + '_meleeattack'):
-				#if not body_animation_player.is_playing():
-				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_meleeattack')
-				# TODO: get melee sound effect
-				#get_node('gruntSound').play()
+			if advanced_animation_player.has_animation(inventory_items[current_inventory_item_index].name + '_meleeattack'):
+				if not advanced_animation_player.is_playing():
+					advanced_animation_player.play(inventory_items[current_inventory_item_index].name + '_meleeattack')
+		
+		elif combat_state == CombatStates.NONE:
+			_set_scaled_cursor(1.0)
+			# stop any existing combat animation TODO: kinda janky
+			advanced_animation_player.stop()
 			
 func set_state(new_state: int, force: bool = false) -> void:
 	var previous_state := state
@@ -190,6 +205,39 @@ func play_hit_animation():
 		
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	
+func _set_scaled_cursor(scale: float):
+	if not original_cursor_image:
+		return
+
+	# Store the scale
+	current_cursor_scale = scale
+
+	# Calculate new dimensions
+	var base_width = original_cursor_image.get_width()
+	var base_height = original_cursor_image.get_height()
+
+	var new_width = int(base_width * scale)
+	var new_height = int(base_height * scale)
+
+	# 2. Duplicate the original image and resize it
+	var scaled_image = original_cursor_image.duplicate()
+	# Use nearest-neighbor interpolation to keep pixel art crisp, or BILINEAR for smooth scaling
+	scaled_image.resize(new_width, new_height, Image.INTERPOLATE_NEAREST)
+
+	# 3. Convert the resized Image back to a Texture
+	var scaled_texture = ImageTexture.create_from_image(scaled_image)
+
+	# Calculate the new hotspot (center of the image)
+	# The hotspot must be scaled by the same factor
+	var new_hotspot = Vector2(new_width / 2.0, new_height / 2.0)
+
+	# 4. Apply the custom mouse cursor
+	Input.set_custom_mouse_cursor(
+		scaled_texture,
+		Input.CURSOR_ARROW, # Use ARROW or a custom type if desired
+		new_hotspot
+	)
 
 func _ready() -> void:
 	# fill up global variables
@@ -197,6 +245,11 @@ func _ready() -> void:
 	feet_animation_player = get_node("AnimatedSprite2D2")
 	advanced_animation_player = get_node("AnimationPlayer")
 	main_game_node = get_tree().get_root().get_node('Node2D')
+	
+	# 1. Load the base texture's Image data (to be resized later)
+	original_cursor_image = preload('res://assets/new_crosshairs/c_dot.png').get_image()
+	# Set the initial, default cursor
+	_set_scaled_cursor(1.0)
 	
 	# Check if this instance is controlled by the current local peer
 	if is_multiplayer_authority():
