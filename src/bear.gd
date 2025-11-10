@@ -1,17 +1,27 @@
 extends CharacterBody2D
 
-var growl_sounds = [preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (1).mp3'),
-				 preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (2).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (3).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (4).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (5).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (6).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (7).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (8).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (9).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (10).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (11).mp3'),
-				preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (12).mp3')]
+var growl_sounds = [
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (1).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (2).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (3).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (4).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (5).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (6).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (7).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (8).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (9).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (10).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (11).mp3'),
+	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (12).mp3')
+]
+				
+var hurt_sounds = [
+	preload('res://assets/Beasts/Beasts/Beast_Grunt.wav'),
+	preload('res://assets/Beasts/Beasts/Beast_Grunt2.wav'),
+	preload('res://assets/Beasts/Beasts/Beast_Grunt3.wav'),
+	preload('res://assets/Beasts/Beasts/Beast_Grunt4.wav'),
+	preload('res://assets/Beasts/Beasts/Beast_Grunt5.wav')
+]
 
 # --- Configuration ---
 const SPEED = 50.0       # Movement speed in pixels/second
@@ -27,6 +37,7 @@ const MAX_SPEED = 75.0      # Maximum movement speed in pixels/second
 var current_speed: float = 0.0 # The speed currently being used for movement
 var time_until_change: float = 0.0
 var target_direction: Vector2 = Vector2.ZERO
+var aggro: bool = false
 
 # function for taking damage	
 # This function can be called by any peer, but will execute on the authority (server)
@@ -38,11 +49,13 @@ func take_damage(damage_amount: int, source_peer_id: int) -> void:
 	play_hit_animation()
 	
 func play_hit_animation():
+	aggro = true
+	get_node("bloodParticles").emitting = true
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.RED, 0.25)
 	tween.tween_property(self, "modulate", Color(1,1,1), 0.25)
 	if not get_node('hurtSound').playing:
-		#get_node('hurtSound').stream = hurt_sounds.pick_random()
+		get_node('hurtSound').stream = hurt_sounds.pick_random()
 		get_node('hurtSound').play()
 			
 func _ready():

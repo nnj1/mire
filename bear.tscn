@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://gcnhqpgb53sy"]
+[gd_scene load_steps=40 format=3 uid="uid://gcnhqpgb53sy"]
 
 [ext_resource type="Texture2D" uid="uid://boqpsxmecray1" path="res://assets/bear/bear1.png" id="1_6wldd"]
 [ext_resource type="Script" uid="uid://thdms44qhm47" path="res://src/bear.gd" id="1_gext2"]
@@ -32,6 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://bvfx76b06oovq" path="res://assets/bear/bear29.png" id="29_doo6m"]
 [ext_resource type="Texture2D" uid="uid://xo4cbhb5a5g" path="res://assets/bear/bear30.png" id="30_2ct58"]
 [ext_resource type="AudioStream" uid="uid://bkuwu0gs8kj5s" path="res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (12).mp3" id="32_gext2"]
+[ext_resource type="AudioStream" uid="uid://botqy14dml38v" path="res://assets/Beasts/Beasts/Beast_Grunt.wav" id="33_ofe2f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w1yv7"]
 radius = 21.0
@@ -157,6 +158,28 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath(".:modulate")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath("bloodParticles:emitting")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_gext2"]
+offsets = PackedFloat32Array(0.590909, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ofe2f"]
+gradient = SubResource("Gradient_gext2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e1qhy"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 77.53
+initial_velocity_max = 63.22
+gravity = Vector3(-100, 0, 0)
+scale_min = 0.0
+scale_max = 6.75
+color = Color(0.558059, 0.0407689, 9.62615e-08, 1)
+color_ramp = SubResource("GradientTexture1D_ofe2f")
+turbulence_enabled = true
 
 [node name="bear" type="CharacterBody2D"]
 scale = Vector2(1.5, 1.5)
@@ -168,6 +191,7 @@ rotation = -1.5708
 shape = SubResource("CapsuleShape2D_w1yv7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_x6cto")
 animation = &"walk"
@@ -182,9 +206,17 @@ wait_time = 5.0
 autostart = true
 
 [node name="hurtSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("32_gext2")
+stream = ExtResource("33_ofe2f")
+volume_db = 10.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gext2")
+
+[node name="bloodParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 1000
+lifetime = 2.0
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_e1qhy")
 
 [connection signal="timeout" from="growlTimer" to="." method="_on_timer_timeout"]
