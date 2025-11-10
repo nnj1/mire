@@ -26,7 +26,10 @@ var inventory_items = [
 		'description': 'For lighting up the dark.',
 		'equippable': true,
 		'consumable': false,
+		'shoot': false,
+		'melee': true,
 		'active': true,
+		'damage': 1,
 		'icon': 'res://assets/FreePixelSurvivalItemsPack/Items/3.png'
 	},
 	{
@@ -34,7 +37,10 @@ var inventory_items = [
 		'description': 'some shit',
 		'equippable': true,
 		'consumable': false,
+		'shoot': false,
+		'melee': true,
 		'active': false,
+		'damage': 5,
 		'icon': 'res://assets/FreePixelMeleeWeaponPack/Weapons/13.png'	
 	},
 	{
@@ -42,7 +48,10 @@ var inventory_items = [
 		'description': 'For lighting up the enemies.',
 		'equippable': true,
 		'consumable': false,
+		'shoot': true,
+		'melee': true,
 		'active': false,
+		'damage': 5,
 		'icon': 'res://assets/FreePixelGunPack/Guns/1.png'	
 	},
 	{
@@ -50,7 +59,10 @@ var inventory_items = [
 		'description': 'some shit',
 		'equippable': true,
 		'consumable': false,
+		'shoot': true,
+		'melee': true,
 		'active': false,
+		'damage': 10,
 		'icon': 'res://assets/FreePixelGunPack/Guns/11.png'	
 	},
 	{
@@ -58,7 +70,10 @@ var inventory_items = [
 		'description': 'some shit',
 		'equippable': true,
 		'consumable': false,
+		'shoot': true,
+		'melee': true,
 		'active': false,
+		'damage': 25,
 		'icon': 'res://assets/FreePixelGunPack/Guns/23.png'	
 	}
 ]
@@ -104,10 +119,11 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 							tween.tween_method(_set_scaled_cursor, 1, 1.5, .1)
 							tween.tween_method(_set_scaled_cursor, 1.5, 1, .2)
 							
+							var damage = inventory_items[current_inventory_item_index].damage
 							if not is_multiplayer_authority():
-								first_object.take_damage.rpc_id(1, 10, int(name))
+								first_object.take_damage.rpc_id(1, damage, int(name))
 							else:
-								first_object.take_damage(10, int(name))
+								first_object.take_damage(damage, int(name))
 								
 					# for single shot weapons, leave the state after firing (not the case for automatic)
 					if inventory_items[current_inventory_item_index].name == 'handgun':
@@ -376,15 +392,15 @@ func get_input():
 				set_state(States.IDLE)
 		
 		# TODO: shooting should only work if using a weapon that can shoot
-		if Input.is_action_pressed("shoot"):
+		if Input.is_action_pressed("shoot") and inventory_items[current_inventory_item_index].shoot:
 			set_combat_state(CombatStates.SHOOTING)
-		if Input.is_action_just_released("shoot"):
+		if Input.is_action_just_released("shoot") and inventory_items[current_inventory_item_index].shoot:
 			set_combat_state(CombatStates.NONE)
 			
 		# TODO: melee should only work if using a weapon that can melee
-		if Input.is_action_pressed("melee"):
+		if Input.is_action_pressed("melee") and inventory_items[current_inventory_item_index].melee:
 			set_combat_state(CombatStates.MELEE)
-		if Input.is_action_just_released("melee"):
+		if Input.is_action_just_released("melee") and inventory_items[current_inventory_item_index].melee:
 			set_combat_state(CombatStates.NONE)
 	
 	#print(combat_state)

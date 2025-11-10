@@ -10,10 +10,12 @@ var play_animation = func():
 	animation_player.play('Armature|Unreal Take|baselayer')
 	
 func _ready() -> void:
-	var animation_player = get_node('model/AnimationPlayer')
-	animation_player.play('Armature|Unreal Take|baselayer')
+	#var animation_player = get_node('model/AnimationPlayer')
+	#animation_player.play('Armature|Unreal Take|baselayer')
+	var animation_player = get_node('AnimationPlayer')
+	animation_player.play('dying')
 
 func save_screenshot():
 	print('method called')
-	get_texture().get_image().save_png('res://assets/bear/bear' + str(frame_counter) + '.png')
+	get_texture().get_image().save_png('res://assets/bear_dying/bear' + str(frame_counter) + '.png')
 	frame_counter += 1

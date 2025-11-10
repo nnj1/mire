@@ -38,15 +38,24 @@ var current_speed: float = 0.0 # The speed currently being used for movement
 var time_until_change: float = 0.0
 var target_direction: Vector2 = Vector2.ZERO
 var aggro: bool = false
+var dead: bool = false
+var health = 100
 
 # function for taking damage	
 # This function can be called by any peer, but will execute on the authority (server)
 @rpc("authority", "reliable")
 func take_damage(damage_amount: int, source_peer_id: int) -> void:
-	print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
-	# do other server side game state shit here
-	# will always be called from server and will be synced across all clients
-	play_hit_animation()
+	if not dead:
+		print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
+		# do other server side game state shit here
+		health = health - damage_amount
+		if health <= 0:
+			dead = true
+			get_node('hurtSound').stream = preload('res://assets/Beasts/Beasts/Beast_Defeated.wav')
+			get_node('AnimatedSprite2D').play('dying')
+			
+		# will always be called from server and will be synced across all clients
+		play_hit_animation()
 	
 func play_hit_animation():
 	aggro = true
@@ -72,27 +81,28 @@ func _physics_process(delta: float):
 	if not is_multiplayer_authority():
 		return
 		
-	# 1. Countdown the timer
-	time_until_change -= delta
-	
-	# 2. Check if it's time to pick a new direction and speed
-	if time_until_change <= 0:
-		_set_new_target_direction()
+	if not dead:
+		# 1. Countdown the timer
+		time_until_change -= delta
 		
-	# 3. Apply Movement
-	# The velocity is directly tied to the target direction and the current_speed
-		# if bear is aggro, he goes twice as fast
+		# 2. Check if it's time to pick a new direction and speed
+		if time_until_change <= 0:
+			_set_new_target_direction()
+			
+		# 3. Apply Movement
+		# The velocity is directly tied to the target direction and the current_speed
+			# if bear is aggro, he goes twice as fast
 
-	velocity = target_direction * (current_speed + 50 * int(aggro))
-	move_and_slide()
-	
-	# 4. Smooth Rotation (LERP)
-	_smooth_rotate(delta)
-	
-	# play animation
-	if velocity:
-		if not get_node('AnimatedSprite2D').is_playing():
-			get_node('AnimatedSprite2D').play('walk')
+		velocity = target_direction * (current_speed + 50 * int(aggro))
+		move_and_slide()
+		
+		# 4. Smooth Rotation (LERP)
+		_smooth_rotate(delta)
+		
+		# play animation
+		if velocity:
+			if not get_node('AnimatedSprite2D').is_playing():
+				get_node('AnimatedSprite2D').play('walk')
 
 # Function to calculate a new random direction, speed, and reset the timer
 func _set_new_target_direction():
@@ -130,7 +140,8 @@ func _on_timer_timeout() -> void:
 	# Only the server runs the game logic
 	if not is_multiplayer_authority():
 		return
-		
-	get_node('growlSound').stream = growl_sounds.pick_random()
-	get_node('growlSound').play()
-	get_node('growlTimer').wait_time = randf_range(3, 8)
+	
+	if not dead:
+		get_node('growlSound').stream = growl_sounds.pick_random()
+		get_node('growlSound').play()
+		get_node('growlTimer').wait_time = randf_range(3, 8)

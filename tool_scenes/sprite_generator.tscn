@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://jv0keutwifqo"]
+[gd_scene load_steps=11 format=4 uid="uid://jv0keutwifqo"]
 
 [ext_resource type="Script" uid="uid://cg8atod0py8mm" path="res://src/sprite_generator.gd" id="1_xrdi2"]
 [ext_resource type="Texture2D" uid="uid://emni6afhym7a" path="res://assets/model_Animation_Walking_withSkin_texture_0.png" id="2_xrdi2"]
@@ -431,6 +431,102 @@ _data = {
 &"Armature|Unreal Take|baselayer": SubResource("Animation_putf1")
 }
 
+[sub_resource type="Animation" id="Animation_qxy78"]
+resource_name = "dying"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.942282)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("model:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.950865, 0.700471, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.366667, 0.5, 0.6, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}, {
+"args": [],
+"method": &"save_screenshot"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_osf77"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -1.5098)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("model:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.10545, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8bbdf"]
+_data = {
+&"RESET": SubResource("Animation_osf77"),
+&"dying": SubResource("Animation_qxy78")
+}
+
 [node name="SpriteGenerator" type="SubViewport"]
 transparent_bg = true
 size = Vector2i(128, 128)
@@ -438,7 +534,7 @@ render_target_update_mode = 4
 script = ExtResource("1_xrdi2")
 
 [node name="model" type="Node3D" parent="."]
-transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+transform = Transform3D(60.9614, 998.14, 0, -998.14, 60.9614, 0, 0, 0, 1000, 0, 1.10545, 0)
 
 [node name="Armature" type="Node3D" parent="model"]
 transform = Transform3D(0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0)
@@ -645,3 +741,8 @@ libraries = {
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.53676, 1.34699)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8bbdf")
+}
