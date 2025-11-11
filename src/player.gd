@@ -393,16 +393,19 @@ func get_input():
 			else:
 				set_state(States.IDLE)
 		
-		# TODO: shooting should only work if using a weapon that can shoot
-		if Input.is_action_pressed("shoot") and inventory_items[current_inventory_item_index].shoot:
-			set_combat_state(CombatStates.SHOOTING)
-		if Input.is_action_just_released("shoot") and inventory_items[current_inventory_item_index].shoot:
-			set_combat_state(CombatStates.NONE)
-			
-		# TODO: melee should only work if using a weapon that can melee
-		if Input.is_action_pressed("melee") and inventory_items[current_inventory_item_index].melee:
-			set_combat_state(CombatStates.MELEE)
-		if Input.is_action_just_released("melee") and inventory_items[current_inventory_item_index].melee:
-			set_combat_state(CombatStates.NONE)
+		# since both these actions use the mouse click, we'll disable it when in pause menu:
+		
+		if not main_game_node.in_pause_menu:
+			# TODO: shooting should only work if using a weapon that can shoot
+			if Input.is_action_pressed("shoot") and inventory_items[current_inventory_item_index].shoot:
+				set_combat_state(CombatStates.SHOOTING)
+			if Input.is_action_just_released("shoot") and inventory_items[current_inventory_item_index].shoot:
+				set_combat_state(CombatStates.NONE)
+				
+			# TODO: melee should only work if using a weapon that can melee
+			if Input.is_action_pressed("melee") and inventory_items[current_inventory_item_index].melee:
+				set_combat_state(CombatStates.MELEE)
+			if Input.is_action_just_released("melee") and inventory_items[current_inventory_item_index].melee:
+				set_combat_state(CombatStates.NONE)
 	
 	#print(combat_state)

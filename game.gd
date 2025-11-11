@@ -2,6 +2,7 @@ extends Node2D
 
 const INVENTORY_SLOT = preload("res://slot.tscn")
 var typing_chat: bool = false
+var in_pause_menu:bool = false
 
 func _ready() -> void:
 	get_node('UI/role').text = Networking.ROLE
@@ -24,6 +25,10 @@ func _input(_event: InputEvent):
 		
 	if Input.is_action_just_pressed('ui_cancel'):
 		get_node('PauseUI').visible = !get_node('PauseUI').visible
+		if get_node('PauseUI').visible:
+			in_pause_menu = true
+		else:
+			in_pause_menu = false
 	
 func _process(_delta: float) -> void:
 	# show FPS on UI
