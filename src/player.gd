@@ -279,11 +279,12 @@ func _ready() -> void:
 
 # for processing input events not related to animation
 func _input(event: InputEvent) -> void:	
-	if Input.is_action_just_released("scroll_up") and not event.ctrl_pressed:
+	if Input.is_action_just_pressed("scroll_up") and not event.ctrl_pressed:
 		inventory_items[current_inventory_item_index].active = false
-		current_inventory_item_index += 1
-		if current_inventory_item_index > len(inventory_items) - 1:
+		if current_inventory_item_index + 1 > len(inventory_items) - 1:
 			current_inventory_item_index = 0
+		else:
+			current_inventory_item_index += 1
 		# OPTIONAL: auto turn on flashlight if you switch to it
 		if inventory_items[current_inventory_item_index].name == 'flashlight':
 			get_node('PointLight2D').enabled = true
@@ -291,11 +292,12 @@ func _input(event: InputEvent) -> void:
 		inventory_items[current_inventory_item_index].active = true
 		# call set state with the same state to get the animations to be consistent with flashlight
 		set_state(state, true)
-	if Input.is_action_just_released("scroll_down") and not event.ctrl_pressed:
+	if Input.is_action_just_pressed("scroll_down") and not event.ctrl_pressed:
 		inventory_items[current_inventory_item_index].active = false
-		current_inventory_item_index -= 1
-		if current_inventory_item_index < 0:
+		if current_inventory_item_index - 1 < 0:
 			current_inventory_item_index = len(inventory_items) - 1
+		else:
+			current_inventory_item_index -= 1
 		inventory_items[current_inventory_item_index].active = true
 		# auto turn on flashlight if you switch to it
 		if inventory_items[current_inventory_item_index].name == 'flashlight':
