@@ -3,6 +3,8 @@ extends Node2D
 const INVENTORY_SLOT = preload("res://slot.tscn")
 var typing_chat: bool = false
 var in_pause_menu:bool = false
+var over_inventory:bool = false
+var viewing_itemview:bool = false
 
 func _ready() -> void:
 	get_node('UI/role').text = Networking.ROLE
@@ -12,7 +14,7 @@ func update_inventory(inventory) -> void:
 	# clear current inventory
 	for child in get_node('UI/inventory').get_children():
 		child.queue_free()
-	# populate clear current inventory TODO: make input object more complex
+	# populate clear current inventory
 	for item in inventory:
 		var slot = INVENTORY_SLOT.instantiate()
 		slot.prepare(item)
@@ -77,3 +79,22 @@ func _on_h_slider_2_value_changed(value: float) -> void:
 
 func _on_h_slider_3_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index('Sound'), value)
+
+func _on_button_pressed() -> void:
+	get_node('UI/itemview').visible = false
+	viewing_itemview = false
+	
+func show_item_view(item: Dictionary):
+	get_node('UI/itemview').visible = true
+	get_node('UI/itemview/Panel/VBoxContainer/Label').text = item.name
+	get_node('UI/itemview/Panel/VBoxContainer/HBoxContainer/RichTextLabel').text = item.description
+	get_node('UI/itemview/Panel/VBoxContainer/HBoxContainer/TextureRect').texture = load(item.icon)
+	viewing_itemview = true
+
+func _on_inventory_mouse_entered() -> void:
+	self.over_inventory = true
+	#print('entered inventory')
+
+func _on_inventory_mouse_exited() -> void:
+	self.over_inventory = false
+	#print('exited inventory')

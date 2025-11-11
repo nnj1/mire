@@ -121,7 +121,7 @@ func _set_new_target_direction():
 	# Convert the angle into a normalized direction vector
 	target_direction = Vector2.from_angle(random_angle)
 	
-	print("New speed: ", current_speed, ". Next change in: ", time_until_change, "s")
+	#print("New speed: ", current_speed, ". Next change in: ", time_until_change, "s")
 
 # Function to smoothly turn the character to face the direction of movement
 func _smooth_rotate(delta: float):

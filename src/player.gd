@@ -14,6 +14,9 @@ var target_angle
 var run_modifier = 1
 var mouse_in_window = false
 
+#variables for combat
+var health = 100
+var dead = false
 
 # variables for customizing the mouse cursor (crosshair)
 var original_cursor_image: Image
@@ -111,7 +114,7 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 					# do the actually shooting operation:
 					var first_object = get_node('RayCast2D').get_collider()
 					if first_object:
-						if first_object.has_method('take_damage'):
+						if first_object.has_method('take_damage') and not first_object.dead:
 							# do the actually shooting operation:
 							
 							# tween the cursor to register a hit
@@ -285,13 +288,18 @@ func _input(event: InputEvent) -> void:
 			current_inventory_item_index = 0
 		else:
 			current_inventory_item_index += 1
+		inventory_items[current_inventory_item_index].active = true
 		# OPTIONAL: auto turn on flashlight if you switch to it
 		if inventory_items[current_inventory_item_index].name == 'flashlight':
 			get_node('PointLight2D').enabled = true
 			get_node("flashlightOnSound").play()
-		inventory_items[current_inventory_item_index].active = true
+		
 		# call set state with the same state to get the animations to be consistent with flashlight
 		set_state(state, true)
+		
+		# Jack into the GUI and update inventory
+		main_game_node.update_inventory(inventory_items)
+		
 	if Input.is_action_just_pressed("scroll_down") and not event.ctrl_pressed:
 		inventory_items[current_inventory_item_index].active = false
 		if current_inventory_item_index - 1 < 0:
@@ -305,9 +313,9 @@ func _input(event: InputEvent) -> void:
 			get_node("flashlightOnSound").play()
 		# call set state with the same state to get the animations to be consistent with flashlight
 		set_state(state, true)
-	# Jack into the GUI and update inventory
-	main_game_node.update_inventory(inventory_items)
-	
+		
+		# Jack into the GUI and update inventory
+		main_game_node.update_inventory(inventory_items)
 	
 # for state and animation dependent things
 func _process(delta: float) -> void:
@@ -395,7 +403,7 @@ func get_input():
 		
 		# since both these actions use the mouse click, we'll disable it when in pause menu:
 		
-		if not main_game_node.in_pause_menu:
+		if not main_game_node.in_pause_menu and not main_game_node.over_inventory and not main_game_node.viewing_itemview:
 			# TODO: shooting should only work if using a weapon that can shoot
 			if Input.is_action_pressed("shoot") and inventory_items[current_inventory_item_index].shoot:
 				set_combat_state(CombatStates.SHOOTING)

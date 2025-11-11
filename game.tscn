@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bcqbvje23h8lk"]
+[gd_scene load_steps=21 format=3 uid="uid://bcqbvje23h8lk"]
 
 [ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://game.gd" id="1_qr50u"]
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
@@ -8,12 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://gcnhqpgb53sy" path="res://bear.tscn" id="6_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
 [ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://src/daynightcycle.gd" id="7_eow3j"]
+[ext_resource type="Texture2D" uid="uid://su7tkhg8lpmb" path="res://assets/FreePixelSurvivalItemsPack/Items/99.png" id="8_hve3p"]
 [ext_resource type="Script" uid="uid://b3dr2crrj4gy0" path="res://enemy_multiplayer_spawner.gd" id="8_vef74"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_j5wjh"]
 properties/0/path = NodePath(".:text")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hve3p"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Shader" id="Shader_mae5d"]
 code = "/* License CC BY-NC-SA 4.0 Deed */
@@ -175,6 +179,7 @@ script = ExtResource("8_vef74")
 bear_enemy_scene = ExtResource("6_j5wjh")
 
 [node name="UI" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="role" type="Label" parent="UI"]
 offset_right = 40.0
@@ -202,6 +207,9 @@ anchor_bottom = 1.0
 offset_top = -50.0
 offset_right = 50.0
 grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 anchors_preset = 3
@@ -234,8 +242,75 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 theme_override_font_sizes/font_size = 20
 
+[node name="itemview" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI/itemview"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -107.5
+offset_right = 175.0
+offset_bottom = 107.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hve3p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/itemview/Panel"]
+custom_minimum_size = Vector2(325, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -44.0
+offset_right = 24.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/itemview/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "title"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/itemview/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/itemview/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "some description"
+
+[node name="TextureRect" type="TextureRect" parent="UI/itemview/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+texture = ExtResource("8_hve3p")
+
+[node name="Button" type="Button" parent="UI/itemview/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Close"
+
 [node name="PauseUI" type="CanvasLayer" parent="."]
-layer = 2
+layer = 3
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="PauseUI"]
@@ -250,10 +325,17 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Panel" type="Panel" parent="PauseUI"]
-offset_left = 384.0
-offset_top = 192.0
-offset_right = 768.0
-offset_bottom = 448.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -128.0
+offset_right = 192.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseUI/Panel"]
 layout_mode = 0
@@ -300,7 +382,7 @@ max_value = 10.0
 
 [node name="Button4" type="Button" parent="PauseUI/Panel/VBoxContainer"]
 layout_mode = 2
-text = "Exit"
+text = "Exit Game"
 
 [node name="Fog layer" type="CanvasLayer" parent="."]
 visible = false
@@ -317,6 +399,7 @@ offset_right = 986.0
 offset_bottom = 575.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="daynightcycle" type="CanvasModulate" parent="."]
 color = Color(0.111197, 0.111197, 0.111197, 1)
@@ -326,10 +409,13 @@ current_time_hour = 18.0
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="daynightcycle"]
 replication_config = SubResource("SceneReplicationConfig_eow3j")
 
+[connection signal="mouse_entered" from="UI/inventory" to="." method="_on_inventory_mouse_entered"]
+[connection signal="mouse_exited" from="UI/inventory" to="." method="_on_inventory_mouse_exited"]
 [connection signal="ready" from="UI/VBoxContainer/chatbox" to="." method="_on_chatbox_ready"]
 [connection signal="focus_entered" from="UI/VBoxContainer/chatinput" to="." method="_on_chatinput_focus_entered"]
 [connection signal="focus_exited" from="UI/VBoxContainer/chatinput" to="." method="_on_chatinput_focus_exited"]
 [connection signal="text_submitted" from="UI/VBoxContainer/chatinput" to="." method="_on_chatinput_text_submitted"]
+[connection signal="pressed" from="UI/itemview/Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="value_changed" from="PauseUI/Panel/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="value_changed" from="PauseUI/Panel/VBoxContainer/HSlider2" to="." method="_on_h_slider_2_value_changed"]
 [connection signal="value_changed" from="PauseUI/Panel/VBoxContainer/HSlider3" to="." method="_on_h_slider_3_value_changed"]

@@ -27,7 +27,6 @@ MusicPlayer="*res://global_scenes/music_player.tscn"
 window/stretch/mode="viewport"
 mouse_cursor/custom_image="uid://c4d0pat76aipd"
 mouse_cursor/custom_image_hotspot=Vector2(64, 64)
-mouse_cursor/tooltip_position_offset=Vector2(20, 20)
 
 [gui]
 
