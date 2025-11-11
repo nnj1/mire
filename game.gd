@@ -21,6 +21,9 @@ func _input(_event: InputEvent):
 	if Input.is_action_just_released("chat"):
 		get_node('UI/VBoxContainer/chatinput').grab_focus()
 		typing_chat = true
+		
+	if Input.is_action_just_pressed('ui_cancel'):
+		get_node('PauseUI').visible = !get_node('PauseUI').visible
 	
 func _process(_delta: float) -> void:
 	# show FPS on UI
@@ -30,6 +33,8 @@ func _process(_delta: float) -> void:
 	var _shader_material : ShaderMaterial = get_node('Fog layer/Fog').material
 	#shader_material.set_shader_parameter("smoke_color", Color(1.0, 0.0, 0.0))
 	
+	
+# code for chat functionality
 func _on_chatinput_focus_entered() -> void:
 	# When TextEdit gains focus, disable player input handling
 	typing_chat = true
@@ -54,3 +59,16 @@ func _on_chatbox_ready() -> void:
 @rpc('any_peer', 'unreliable_ordered')
 func send_chat(new_text, id):
 	get_node('UI/VBoxContainer/chatbox').text += '\n' + str(id) + ':  '+ new_text
+
+# Settings UI stuff
+func _on_button_4_pressed() -> void:
+	get_tree().quit()
+
+func _on_h_slider_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index('Master'), value)
+
+func _on_h_slider_2_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index('Music'), value)
+
+func _on_h_slider_3_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index('Sound'), value)

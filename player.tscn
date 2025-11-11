@@ -2355,6 +2355,7 @@ texture = ExtResource("343_ofmv8")
 [node name="reloadSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("426_5ew75")
 volume_db = 10.0
+bus = &"Sound"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -2412,3 +2413,4 @@ target_position = Vector2(2312, 0)
 collide_with_areas = true
 
 [node name="hurtSound" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sound"

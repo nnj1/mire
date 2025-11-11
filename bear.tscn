@@ -233,6 +233,7 @@ frame_progress = 1.0
 
 [node name="growlSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("32_gext2")
+bus = &"Sound"
 
 [node name="growlTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -241,6 +242,7 @@ autostart = true
 [node name="hurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("33_ofe2f")
 volume_db = 10.0
+bus = &"Sound"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gext2")
