@@ -2405,7 +2405,6 @@ amount = 100
 lifetime = 0.1
 one_shot = true
 explosiveness = 0.5
-trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_ob5km")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
