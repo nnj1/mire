@@ -42,7 +42,7 @@ var dead: bool = false
 var health = 100
 
 # function for taking damage	
-# This function can be called by any peer, but will execute on the authority (server)
+
 @rpc("authority", "reliable")
 func take_damage(damage_amount: int, source_peer_id: int) -> void:
 	if not dead:
@@ -54,9 +54,10 @@ func take_damage(damage_amount: int, source_peer_id: int) -> void:
 			get_node('hurtSound').stream = preload('res://assets/Beasts/Beasts/Beast_Defeated.wav')
 			get_node('AnimatedSprite2D').play('dying')
 			
-		# will always be called from server and will be synced across all clients
-		play_hit_animation()
-	
+		# will always be called from server and will modify things that will be synced with multiplayersynchronizer
+		play_hit_animation.rpc()
+		
+@rpc("any_peer", "call_local")
 func play_hit_animation():
 	aggro = true
 	get_node("bloodParticles").emitting = true
@@ -68,6 +69,9 @@ func play_hit_animation():
 		get_node('hurtSound').play()
 			
 func _ready():
+	
+	self.set_multiplayer_authority(1)
+	
 	# Initialize the randomizer for unique paths each run
 	randomize()
 	

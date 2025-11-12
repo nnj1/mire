@@ -123,10 +123,16 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 							tween.tween_method(_set_scaled_cursor, 1.5, 1, .2)
 							
 							var damage = inventory_items[current_inventory_item_index].damage
-							if not is_multiplayer_authority():
-								first_object.take_damage.rpc_id(1, damage, int(name))
+							
+							#if not multiplayer.is_server():
+								#print('made it here')
+								#first_object.take_damage.rpc_id(1, damage, int(name))
+							#else:
+								#first_object.take_damage(damage, int(name))
+							if not multiplayer.is_server():
+								main_game_node.request_damage.rpc_id(1, first_object.get_path(), damage, multiplayer.get_unique_id())
 							else:
-								first_object.take_damage(damage, int(name))
+								main_game_node.request_damage(first_object.get_path(), damage, multiplayer.get_unique_id())
 								
 					# for single shot weapons, leave the state after firing (not the case for automatic)
 					if inventory_items[current_inventory_item_index].name == 'handgun':
@@ -208,13 +214,15 @@ func set_state(new_state: int, force: bool = false) -> void:
 # This function can be called by any peer, but will execute on the authority (server)
 @rpc("authority", "reliable")
 func take_damage(damage_amount: int, source_peer_id: int) -> void:
-	print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
-	# do other server side game state shit here
-	play_hit_animation.rpc()
-	
-@rpc("any_peer", "reliable")
+	if multiplayer.is_server() and not dead:
+		print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
+		# do other server side game state shit here
+		play_hit_animation.rpc() # other people can see the hit
+
+@rpc("any_peer", "call_local")		
 func play_hit_animation():
-	get_node('Camera2D').add_trauma(0.5)
+	if is_multiplayer_authority():
+		get_node('Camera2D').add_trauma(0.5)
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.RED, 0.25)
 	tween.tween_property(self, "modulate", Color(1,1,1), 0.25)
