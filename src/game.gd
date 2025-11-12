@@ -70,7 +70,9 @@ func send_chat(new_text, id):
 	# if the message contains a server code send it to server TODO: only allow the authority to do this!
 	if multiplayer.is_server():
 		if new_text == '/spawnbear':
-			get_node('enemies/EnemyMultiplayerSpawner').spawn_new_enemy(Vector2(0,0))
+			get_node('entities/EnemyMultiplayerSpawner').spawn_new_enemy(Vector2(0,0))
+		if new_text == '/spawnitem':
+			get_node('entities/ItemMultiplayerSpawner').spawn_new_item('some item name', Vector2(0,0))
 
 func _on_h_slider_2_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index('Music'), value)

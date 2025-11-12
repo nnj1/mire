@@ -2311,6 +2311,7 @@ _data = {
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
+motion_mode = 1
 script = ExtResource("1_q2kef")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]

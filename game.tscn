@@ -1,6 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://bcqbvje23h8lk"]
+[gd_scene load_steps=23 format=3 uid="uid://bcqbvje23h8lk"]
 
-[ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://game.gd" id="1_qr50u"]
+[ext_resource type="Script" uid="uid://3aivdknkmhde" path="res://src/game.gd" id="1_qr50u"]
 [ext_resource type="PackedScene" uid="uid://xxpj67mfe006" path="res://player.tscn" id="2_jd5xs"]
 [ext_resource type="Texture2D" uid="uid://cm3vkt6ub80vo" path="res://assets/ground.jpeg" id="3_7jets"]
 [ext_resource type="Shader" uid="uid://csjvcxecatlvs" path="res://shaders/fog.gdshader" id="4_u8hns"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bndy4nvd0b52m" path="res://bigboy.tscn" id="6_ryrav"]
 [ext_resource type="Script" uid="uid://bl818mtn2gra3" path="res://src/daynightcycle.gd" id="7_eow3j"]
 [ext_resource type="Texture2D" uid="uid://su7tkhg8lpmb" path="res://assets/FreePixelSurvivalItemsPack/Items/99.png" id="8_hve3p"]
-[ext_resource type="Script" uid="uid://b3dr2crrj4gy0" path="res://enemy_multiplayer_spawner.gd" id="8_vef74"]
+[ext_resource type="Script" uid="uid://d2iibxsglw1i8" path="res://src/item_multiplayer_spawner.gd" id="8_mfdv2"]
+[ext_resource type="Script" uid="uid://b3dr2crrj4gy0" path="res://src/enemy_multiplayer_spawner.gd" id="8_vef74"]
+[ext_resource type="PackedScene" uid="uid://bep00fq05udiu" path="res://ground_item.tscn" id="9_iotsf"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_j5wjh"]
 properties/0/path = NodePath(".:text")
@@ -166,17 +168,23 @@ spawn_path = NodePath("..")
 script = ExtResource("5_7jktm")
 network_player = ExtResource("2_jd5xs")
 
-[node name="enemies" type="Node2D" parent="."]
+[node name="entities" type="Node2D" parent="."]
 modulate = Color(0.136826, 0.136826, 0.136826, 1)
 
-[node name="CharacterBody2D" parent="enemies" instance=ExtResource("6_ryrav")]
+[node name="CharacterBody2D" parent="entities" instance=ExtResource("6_ryrav")]
 position = Vector2(985, 530)
 
-[node name="EnemyMultiplayerSpawner" type="MultiplayerSpawner" parent="enemies"]
+[node name="EnemyMultiplayerSpawner" type="MultiplayerSpawner" parent="entities"]
 _spawnable_scenes = PackedStringArray("uid://gcnhqpgb53sy")
 spawn_path = NodePath("..")
 script = ExtResource("8_vef74")
 bear_enemy_scene = ExtResource("6_j5wjh")
+
+[node name="ItemMultiplayerSpawner" type="MultiplayerSpawner" parent="entities"]
+_spawnable_scenes = PackedStringArray("uid://bep00fq05udiu")
+spawn_path = NodePath("..")
+script = ExtResource("8_mfdv2")
+ground_item_scene = ExtResource("9_iotsf")
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
