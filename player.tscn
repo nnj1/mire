@@ -437,6 +437,13 @@
 [ext_resource type="AudioStream" uid="uid://nd5scofelrk8" path="res://assets/horror sfx/Breathing_fast.wav" id="433_aoemw"]
 [ext_resource type="AudioStream" uid="uid://cmc5dcc7t7t2k" path="res://assets/horror sfx/Fluorescent light bulb buzz_2.wav" id="435_ob5km"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ob5km"]
+particle_flag_disable_z = true
+radial_velocity_min = -103.44
+radial_velocity_max = 80.47
+gravity = Vector3(0, 0, 0)
+color = Color(1, 1, 0, 1)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wbpv"]
 radius = 82.0061
 
@@ -2302,16 +2309,18 @@ _data = {
 &"shotgun_shoot": SubResource("Animation_l1vf5")
 }
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ob5km"]
-particle_flag_disable_z = true
-radial_velocity_min = -103.44
-radial_velocity_max = 80.47
-gravity = Vector3(0, 0, 0)
-color = Color(1, 1, 0, 1)
-
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_q2kef")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(184, 60)
+emitting = false
+amount = 100
+lifetime = 0.1
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_ob5km")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4wbpv")
@@ -2397,15 +2406,6 @@ bus = &"Sound"
 stream = ExtResource("435_ob5km")
 volume_db = -10.0
 bus = &"Sound"
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(184, 60)
-emitting = false
-amount = 100
-lifetime = 0.1
-one_shot = true
-explosiveness = 0.5
-process_material = SubResource("ParticleProcessMaterial_ob5km")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(2312, 0)
