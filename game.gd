@@ -106,3 +106,6 @@ func request_damage(target_path, damage_amount: int, source_peer_id: int):
 	print('Server got request from ' + str(source_peer_id) + ' to do damage to ' + target_node.name)
 	# do the damage and shit
 	target_node.take_damage(damage_amount, source_peer_id)
+
+func _on_button_4_pressed() -> void:
+	get_tree().quit()
