@@ -91,6 +91,12 @@ func show_item_view(item: Dictionary):
 	get_node('UI/itemview/Panel/VBoxContainer/HBoxContainer/RichTextLabel').text = item.description
 	get_node('UI/itemview/Panel/VBoxContainer/HBoxContainer/TextureRect').texture = load(item.icon)
 	viewing_itemview = true
+	
+func _on_button_3_pressed() -> void:
+	get_node('UI/itemview').visible = false
+	viewing_itemview = false
+	# delete the item in the itemview
+	get_node(str(multiplayer.get_unique_id())).remove_item_from_inventory(get_node('UI/itemview/Panel/VBoxContainer/Label').text)
 
 func _on_inventory_mouse_entered() -> void:
 	self.over_inventory = true
@@ -128,5 +134,6 @@ func request_pick_up(target_path, source_peer_id: int, source_path):
 		# delete the target node
 		target_node.queue_free()
 
+# exit game button in pause menu
 func _on_button_4_pressed() -> void:
 	get_tree().quit()

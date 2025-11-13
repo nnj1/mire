@@ -331,9 +331,22 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 texture = ExtResource("8_hve3p")
 
-[node name="Button" type="Button" parent="UI/itemview/Panel/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/itemview/Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Button2" type="Button" parent="UI/itemview/Panel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
+text = "Drop"
+
+[node name="Button3" type="Button" parent="UI/itemview/Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Destroy"
+
+[node name="Button" type="Button" parent="UI/itemview/Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
 text = "Close"
 
 [node name="PauseUI" type="CanvasLayer" parent="."]
@@ -442,7 +455,8 @@ replication_config = SubResource("SceneReplicationConfig_eow3j")
 [connection signal="focus_entered" from="UI/VBoxContainer/chatinput" to="." method="_on_chatinput_focus_entered"]
 [connection signal="focus_exited" from="UI/VBoxContainer/chatinput" to="." method="_on_chatinput_focus_exited"]
 [connection signal="text_submitted" from="UI/VBoxContainer/chatinput" to="." method="_on_chatinput_text_submitted"]
-[connection signal="pressed" from="UI/itemview/Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/itemview/Panel/VBoxContainer/HBoxContainer2/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="UI/itemview/Panel/VBoxContainer/HBoxContainer2/Button" to="." method="_on_button_pressed"]
 [connection signal="value_changed" from="PauseUI/Panel/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="value_changed" from="PauseUI/Panel/VBoxContainer/HSlider2" to="." method="_on_h_slider_2_value_changed"]
 [connection signal="value_changed" from="PauseUI/Panel/VBoxContainer/HSlider3" to="." method="_on_h_slider_3_value_changed"]

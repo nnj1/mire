@@ -287,6 +287,33 @@ func add_item_to_inventory(item_data):
 		inventory_items.append(item_data)
 		main_game_node.update_inventory(inventory_items)
 
+# only removes the first occurence of the item
+func remove_item_from_inventory(given_item_name):
+	if not dead:
+		#print('trynna remove ' + given_item_name)
+		var index = null
+		for i in range(inventory_items.size()):
+			var item = inventory_items[i]
+			if item.name == given_item_name:
+				index = i
+				break
+		# now we need to carefully delete the item based on some factors
+		if index != null:
+			if index == current_inventory_item_index:
+				self.advance_inventory_active_item()
+				inventory_items.remove_at(index)
+				# we're now down by an item in the inventory	
+				current_inventory_item_index -= 1
+			if index < current_inventory_item_index:
+				inventory_items.remove_at(index)
+				# we're now down by an item in the inventory	
+				current_inventory_item_index -= 1
+			if index > current_inventory_item_index: 
+				inventory_items.remove_at(index)
+				
+		main_game_node.update_inventory(inventory_items)
+		#print(inventory_items)
+
 func _ready() -> void:
 	# fill up global variables
 	body_animation_player = get_node("AnimatedSprite2D")
@@ -310,41 +337,48 @@ func _ready() -> void:
 		get_node("Camera2D").enabled = false
 
 # for processing input events not related to animation
+
+func advance_inventory_active_item():
+	inventory_items[current_inventory_item_index].active = false
+	if current_inventory_item_index + 1 > len(inventory_items) - 1:
+		current_inventory_item_index = 0
+	else:
+		current_inventory_item_index += 1
+	inventory_items[current_inventory_item_index].active = true
+	# OPTIONAL: auto turn on flashlight if you switch to it
+	if inventory_items[current_inventory_item_index].name == 'flashlight':
+		get_node('PointLight2D').enabled = true
+		get_node("flashlightOnSound").play()
+	
+	# call set state with the same state to get the animations to be consistent with flashlight
+	set_state(state, true)
+	
+	# Jack into the GUI and update inventory
+	main_game_node.update_inventory(inventory_items)
+	
+func deadvance_inventory_active_item():
+	inventory_items[current_inventory_item_index].active = false
+	if current_inventory_item_index - 1 < 0:
+		current_inventory_item_index = len(inventory_items) - 1
+	else:
+		current_inventory_item_index -= 1
+	inventory_items[current_inventory_item_index].active = true
+	# auto turn on flashlight if you switch to it
+	if inventory_items[current_inventory_item_index].name == 'flashlight':
+		get_node('PointLight2D').enabled = true
+		get_node("flashlightOnSound").play()
+	# call set state with the same state to get the animations to be consistent with flashlight
+	set_state(state, true)
+	
+	# Jack into the GUI and update inventory
+	main_game_node.update_inventory(inventory_items)
+
 func _input(event: InputEvent) -> void:	
 	if Input.is_action_just_pressed("scroll_up") and not event.ctrl_pressed:
-		inventory_items[current_inventory_item_index].active = false
-		if current_inventory_item_index + 1 > len(inventory_items) - 1:
-			current_inventory_item_index = 0
-		else:
-			current_inventory_item_index += 1
-		inventory_items[current_inventory_item_index].active = true
-		# OPTIONAL: auto turn on flashlight if you switch to it
-		if inventory_items[current_inventory_item_index].name == 'flashlight':
-			get_node('PointLight2D').enabled = true
-			get_node("flashlightOnSound").play()
-		
-		# call set state with the same state to get the animations to be consistent with flashlight
-		set_state(state, true)
-		
-		# Jack into the GUI and update inventory
-		main_game_node.update_inventory(inventory_items)
+		advance_inventory_active_item()
 		
 	if Input.is_action_just_pressed("scroll_down") and not event.ctrl_pressed:
-		inventory_items[current_inventory_item_index].active = false
-		if current_inventory_item_index - 1 < 0:
-			current_inventory_item_index = len(inventory_items) - 1
-		else:
-			current_inventory_item_index -= 1
-		inventory_items[current_inventory_item_index].active = true
-		# auto turn on flashlight if you switch to it
-		if inventory_items[current_inventory_item_index].name == 'flashlight':
-			get_node('PointLight2D').enabled = true
-			get_node("flashlightOnSound").play()
-		# call set state with the same state to get the animations to be consistent with flashlight
-		set_state(state, true)
-		
-		# Jack into the GUI and update inventory
-		main_game_node.update_inventory(inventory_items)
+		deadvance_inventory_active_item()
 	
 # for state and animation dependent things
 func _process(delta: float) -> void:
