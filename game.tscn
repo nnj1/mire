@@ -146,9 +146,9 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_4hy44")
 noise_type = 0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_42188"]
+noise = SubResource("FastNoiseLite_0u30s")
 seamless = true
 normalize = false
-noise = SubResource("FastNoiseLite_0u30s")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i6k3k"]
 shader = ExtResource("4_u8hns")
@@ -252,11 +252,11 @@ grow_vertical = 0
 [node name="chatbox" type="RichTextLabel" parent="UI/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
 theme_override_font_sizes/bold_italics_font_size = 20
 theme_override_font_sizes/italics_font_size = 20
 theme_override_font_sizes/mono_font_size = 20
-theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 20
 scroll_following = true
 vertical_alignment = 2
 

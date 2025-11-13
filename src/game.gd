@@ -102,26 +102,31 @@ func _on_inventory_mouse_exited() -> void:
 
 # server side code that any peer can connect to to request the server to do shit
 @rpc("any_peer", 'reliable')
-func request_damage(target_path, damage_amount: int, source_peer_id: int, source_path):
+func request_damage(target_path, damage_amount: int, source_peer_id: int, _source_path):
 	if not multiplayer.is_server():
 		return
 	var target_node = get_node(target_path)
 	print('Server got request from ' + str(source_peer_id) + ' to do damage to ' + target_node.name)
 	# do the damage and shit
+	# TODO: this may need to target the actual RPC of the clent
 	target_node.take_damage(damage_amount, source_peer_id)
 	
 @rpc("any_peer", 'reliable')
 func request_pick_up(target_path, source_peer_id: int, source_path):
 	if not multiplayer.is_server():
 		return
-	var target_node = get_node(target_path)
-	var player_node = get_node(source_path)
-	print('Server got request from ' + str(source_peer_id) + ' to pick up ' + target_node.name)
-	# give the item to the player that requested it
-	var item_data = target_node.item_data
-	player_node.add_item_to_inventory(item_data)
-	# delete the target node
-	target_node.queue_free()
+	var target_node = get_node_or_null(target_path)
+	if target_node:
+		var player_node = get_node(source_path)
+		print('Server got request from ' + str(source_peer_id) + ' to pick up ' + target_node.name)
+		# give the item to the player that requested it
+		var item_data = target_node.item_data
+		if source_peer_id == 1:
+			player_node.add_item_to_inventory(item_data)
+		else:
+			player_node.add_item_to_inventory.rpc_id(source_peer_id, item_data)
+		# delete the target node
+		target_node.queue_free()
 
 func _on_button_4_pressed() -> void:
 	get_tree().quit()

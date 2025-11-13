@@ -278,9 +278,9 @@ func _set_scaled_cursor(scale: float):
 		new_hotspot
 	)
 
-@rpc("authority", "reliable")
+@rpc("any_peer", "reliable")
 func add_item_to_inventory(item_data):
-	if multiplayer.is_server() and not dead:
+	if not dead:
 		inventory_items.append(item_data)
 		main_game_node.update_inventory(inventory_items)
 
@@ -457,8 +457,9 @@ func get_input():
 # if interaction is active, this signal will go off if an item is in the area
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	# if the body is an item, pick it up
-	if 'item_data' in body:
-		if not multiplayer.is_server():
-			main_game_node.request_pick_up.rpc_id(1, body.get_path(), multiplayer.get_unique_id(), self.get_path())
-		else:
-			main_game_node.request_pick_up(body.get_path(), multiplayer.get_unique_id(), self.get_path())
+	if body:
+		if 'item_data' in body:
+			if not multiplayer.is_server():
+				main_game_node.request_pick_up.rpc_id(1, body.get_path(), multiplayer.get_unique_id(), self.get_path())
+			else:
+				main_game_node.request_pick_up(body.get_path(), multiplayer.get_unique_id(), self.get_path())
