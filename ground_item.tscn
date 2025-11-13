@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bep00fq05udiu"]
+[gd_scene load_steps=7 format=3 uid="uid://bep00fq05udiu"]
 
 [ext_resource type="Script" uid="uid://bd46xarcc3lsr" path="res://src/ground_item.gd" id="1_6ecyt"]
 [ext_resource type="Texture2D" uid="uid://2gfourhixesk" path="res://assets/FreePixelSurvivalItemsPack/Items/88.png" id="1_dgtp1"]
@@ -8,7 +8,19 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a60gu"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_a60gu"]
+properties/0/path = NodePath("TextureRect:tooltip_text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="RigidBody2D" type="RigidBody2D"]
+input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_6ecyt")
 gravity_scale = 0.0
 script = ExtResource("1_6ecyt")
@@ -33,5 +45,9 @@ pivot_offset = Vector2(16, 16)
 mouse_default_cursor_shape = 2
 texture = ExtResource("1_dgtp1")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_a60gu")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="TextureRect" to="." method="_on_texture_rect_mouse_entered"]
 [connection signal="mouse_exited" from="TextureRect" to="." method="_on_texture_rect_mouse_exited"]

@@ -15,7 +15,10 @@ var run_modifier = 1
 var mouse_in_window = false
 
 #variables for combat
+var MAX_HEALTH = 100
 var health = 100
+var MAX_STAMINA = 100
+var stamina = 100
 var dead = false
 
 # variables for customizing the mouse cursor (crosshair)
@@ -161,6 +164,7 @@ func set_state(new_state: int, force: bool = false) -> void:
 	# only do animation stuff if the state has changed to a different one
 	if previous_state != new_state or not force:
 		if state == States.IDLE:
+			get_node('Area2D').monitoring = false
 			if combat_state == CombatStates.NONE:
 				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_idle')
 			feet_animation_player.play('idle')
@@ -169,6 +173,7 @@ func set_state(new_state: int, force: bool = false) -> void:
 			if not get_node('breathingSlowSound').playing:
 				get_node('breathingSlowSound').play()
 		elif state == States.WALKING:
+			get_node('Area2D').monitoring = false
 			run_modifier = 1
 			if combat_state == CombatStates.NONE:	
 				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_move')
@@ -185,6 +190,7 @@ func set_state(new_state: int, force: bool = false) -> void:
 			if not get_node('breathingFastSound').playing:
 				get_node('breathingFastSound').play()
 		elif state == States.RUNNING:
+			get_node('Area2D').monitoring = false
 			run_modifier = 2
 			if combat_state == CombatStates.NONE:
 				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_move')
@@ -203,12 +209,17 @@ func set_state(new_state: int, force: bool = false) -> void:
 			if not get_node('breathingSound').playing:
 				get_node('breathingSound').play()
 		elif state == States.RELOADING:
+			get_node('Area2D').monitoring = false
 			if body_animation_player.get_animation() != inventory_items[current_inventory_item_index].name + '_reload':
 				if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index].name + '_reload'):
 					body_animation_player.play(inventory_items[current_inventory_item_index].name + '_reload')
 					if not get_node('reloadSound').playing:
 						get_node('reloadSound').play()
 			feet_animation_player.play('idle')
+		elif state == States.INTERACTING:
+			# maybe play some interacting animation here?
+			get_node('Area2D').monitoring = true
+			pass
 
 # function for taking damage	
 # This function can be called by any peer, but will execute on the authority (server)
@@ -363,10 +374,14 @@ func _process(delta: float) -> void:
 	if mouse_in_window:
 		var direction_to_target = get_global_mouse_position() - self.global_position
 		# 1. Calculate the target angle (in radians)
-		target_angle = direction_to_target.angle() 
+		target_angle = direction_to_target.angle()
 		# 2. Lerp the current rotation angle toward the target angle
 		rotation = lerp_angle(rotation, target_angle, 6 * delta)
 		#look_at(look_mouse_position)		
+		
+	# draw the health and stamina bars
+	main_game_node.get_node('UI/healthbar').value = self.health / self.MAX_HEALTH * 100
+	main_game_node.get_node('UI/staminabar').value = self.stamina / self.MAX_STAMINA * 100
 
 func _physics_process(_delta):
 	if not is_multiplayer_authority(): return
@@ -423,5 +438,20 @@ func get_input():
 				set_combat_state(CombatStates.MELEE)
 			if Input.is_action_just_released("melee") and inventory_items[current_inventory_item_index].melee:
 				set_combat_state(CombatStates.NONE)
-	
+				
+			if Input.is_action_pressed('interact'):
+				set_state(States.INTERACTING)
+			if Input.is_action_just_released("interact"):
+				set_state(States.IDLE)
+				
 	#print(combat_state)
+
+
+# if interaction is active, this signal will go off if an item is in the area
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	# if the body is an item, pick it up
+	if 'item_data' in body:
+		if not multiplayer.is_server():
+			main_game_node.request_pick_up.rpc_id(1, body.get_path(), multiplayer.get_unique_id())
+		else:
+			main_game_node.request_pick_up(body.get_path(), multiplayer.get_unique_id())

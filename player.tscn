@@ -1,4 +1,4 @@
-[gd_scene load_steps=452 format=3 uid="uid://xxpj67mfe006"]
+[gd_scene load_steps=453 format=3 uid="uid://xxpj67mfe006"]
 
 [ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://src/player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
@@ -2309,6 +2309,8 @@ _data = {
 &"shotgun_shoot": SubResource("Animation_l1vf5")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hgg0t"]
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
 motion_mode = 1
@@ -2414,3 +2416,14 @@ collide_with_areas = true
 
 [node name="hurtSound" type="AudioStreamPlayer2D" parent="."]
 bus = &"Sound"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_hgg0t")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -18,14 +18,15 @@ func spawn_new_item(item_name: String, spawn_position: Vector2):
 	# TODO: based on item name, look up item data from JSON structure and create an item
 	
 	var new_item = ground_item_scene.instantiate()
-	new_item.prepare()
 	new_item.position = spawn_position + Vector2.from_angle(randf_range(0, TAU)) * 200
 	new_item.rotation = randf_range(0, TAU)
+	new_item.prepare()
 
 	# The Spawner watches its 'Spawn Path' (e.g., EnemyContainer) for new children.
 	# When the server adds a new child here, the Spawner automatically replicates the spawn 
 	# (and the linked MultiplayerSynchronizer) to all connected clients.
 	get_node(spawn_path).call_deferred("add_child", new_item, true)
+	
 
 func is_server():
 	return multiplayer.is_server()
