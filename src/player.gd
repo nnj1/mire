@@ -16,7 +16,7 @@ var mouse_in_window = false
 
 #variables for combat
 var MAX_HEALTH = 100
-var health = 100
+@export var health = 100
 var MAX_STAMINA = 100
 var stamina = 100
 var dead = false
@@ -133,9 +133,9 @@ func set_combat_state(new_combat_state: int, force: bool = false) -> void:
 							#else:
 								#first_object.take_damage(damage, int(name))
 							if not multiplayer.is_server():
-								main_game_node.request_damage.rpc_id(1, first_object.get_path(), damage, multiplayer.get_unique_id())
+								main_game_node.request_damage.rpc_id(1, first_object.get_path(), damage, multiplayer.get_unique_id(), self.get_path())
 							else:
-								main_game_node.request_damage(first_object.get_path(), damage, multiplayer.get_unique_id())
+								main_game_node.request_damage(first_object.get_path(), damage, multiplayer.get_unique_id(), self.get_path())
 								
 					# for single shot weapons, leave the state after firing (not the case for automatic)
 					if inventory_items[current_inventory_item_index].name == 'handgun':
@@ -222,18 +222,19 @@ func set_state(new_state: int, force: bool = false) -> void:
 			pass
 
 # function for taking damage	
-# This function can be called by any peer, but will execute on the authority (server)
 @rpc("authority", "reliable")
 func take_damage(damage_amount: int, source_peer_id: int) -> void:
-	if multiplayer.is_server() and not dead:
+	if not dead:
 		print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
 		# do other server side game state shit here
-		play_hit_animation.rpc() # other people can see the hit
-
+		play_hit_animation.rpc(damage_amount) # calls this function on all connected peers
+	
 @rpc("any_peer", "call_local")		
-func play_hit_animation():
+func play_hit_animation(damage_amount):
+	# the peer that runs this and has authority will actually update their health
 	if is_multiplayer_authority():
 		get_node('Camera2D').add_trauma(0.5)
+		health -= damage_amount
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.RED, 0.25)
 	tween.tween_property(self, "modulate", Color(1,1,1), 0.25)
@@ -276,6 +277,12 @@ func _set_scaled_cursor(scale: float):
 		Input.CURSOR_ARROW, # Use ARROW or a custom type if desired
 		new_hotspot
 	)
+
+@rpc("authority", "reliable")
+func add_item_to_inventory(item_data):
+	if multiplayer.is_server() and not dead:
+		inventory_items.append(item_data)
+		main_game_node.update_inventory(inventory_items)
 
 func _ready() -> void:
 	# fill up global variables
@@ -380,8 +387,8 @@ func _process(delta: float) -> void:
 		#look_at(look_mouse_position)		
 		
 	# draw the health and stamina bars
-	main_game_node.get_node('UI/healthbar').value = self.health / self.MAX_HEALTH * 100
-	main_game_node.get_node('UI/staminabar').value = self.stamina / self.MAX_STAMINA * 100
+	main_game_node.get_node('UI/healthbar').value = float(self.health) / self.MAX_HEALTH * 100
+	main_game_node.get_node('UI/staminabar').value = float(self.stamina) / self.MAX_STAMINA * 100
 
 func _physics_process(_delta):
 	if not is_multiplayer_authority(): return
@@ -452,6 +459,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	# if the body is an item, pick it up
 	if 'item_data' in body:
 		if not multiplayer.is_server():
-			main_game_node.request_pick_up.rpc_id(1, body.get_path(), multiplayer.get_unique_id())
+			main_game_node.request_pick_up.rpc_id(1, body.get_path(), multiplayer.get_unique_id(), self.get_path())
 		else:
-			main_game_node.request_pick_up(body.get_path(), multiplayer.get_unique_id())
+			main_game_node.request_pick_up(body.get_path(), multiplayer.get_unique_id(), self.get_path())

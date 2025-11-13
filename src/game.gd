@@ -5,6 +5,7 @@ var typing_chat: bool = false
 var in_pause_menu:bool = false
 var over_inventory:bool = false
 var viewing_itemview:bool = false
+const is_player:bool = true
 
 func _ready() -> void:
 	get_node('UI/role').text = Networking.ROLE
@@ -101,7 +102,7 @@ func _on_inventory_mouse_exited() -> void:
 
 # server side code that any peer can connect to to request the server to do shit
 @rpc("any_peer", 'reliable')
-func request_damage(target_path, damage_amount: int, source_peer_id: int):
+func request_damage(target_path, damage_amount: int, source_peer_id: int, source_path):
 	if not multiplayer.is_server():
 		return
 	var target_node = get_node(target_path)
@@ -110,14 +111,15 @@ func request_damage(target_path, damage_amount: int, source_peer_id: int):
 	target_node.take_damage(damage_amount, source_peer_id)
 	
 @rpc("any_peer", 'reliable')
-func request_pick_up(target_path, source_peer_id: int):
+func request_pick_up(target_path, source_peer_id: int, source_path):
 	if not multiplayer.is_server():
 		return
 	var target_node = get_node(target_path)
+	var player_node = get_node(source_path)
 	print('Server got request from ' + str(source_peer_id) + ' to pick up ' + target_node.name)
 	# give the item to the player that requested it
 	var item_data = target_node.item_data
-	
+	player_node.add_item_to_inventory(item_data)
 	# delete the target node
 	target_node.queue_free()
 

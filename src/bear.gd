@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const is_player:bool = false
+
 var growl_sounds = [
 	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (1).mp3'),
 	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (2).mp3'),
