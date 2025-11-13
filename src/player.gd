@@ -166,7 +166,8 @@ func set_state(new_state: int, force: bool = false) -> void:
 		if state == States.IDLE:
 			get_node('Area2D').monitoring = false
 			if combat_state == CombatStates.NONE:
-				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_idle')
+				if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index].name + '_idle'):
+					body_animation_player.play(inventory_items[current_inventory_item_index].name + '_idle')
 			feet_animation_player.play('idle')
 			get_node('walkingSound').stop()
 			get_node('reloadSound').stop()
@@ -176,7 +177,8 @@ func set_state(new_state: int, force: bool = false) -> void:
 			get_node('Area2D').monitoring = false
 			run_modifier = 1
 			if combat_state == CombatStates.NONE:	
-				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_move')
+				if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index].name + '_move'):
+					body_animation_player.play(inventory_items[current_inventory_item_index].name + '_move')
 			if abs(input_direction.dot(Vector2.LEFT)) > abs(input_direction.dot(Vector2.UP)):
 				feet_animation_player.play('strafe_left')
 			elif abs(input_direction.dot(Vector2.RIGHT)) > abs(input_direction.dot(Vector2.UP)):
@@ -193,7 +195,8 @@ func set_state(new_state: int, force: bool = false) -> void:
 			get_node('Area2D').monitoring = false
 			run_modifier = 2
 			if combat_state == CombatStates.NONE:
-				body_animation_player.play(inventory_items[current_inventory_item_index].name + '_move')
+				if body_animation_player.sprite_frames.has_animation(inventory_items[current_inventory_item_index].name + '_move'):
+					body_animation_player.play(inventory_items[current_inventory_item_index].name + '_move')
 			#TODO: find a way to dynamically adjust the strafe animation to be faster
 			if abs(input_direction.dot(Vector2.LEFT)) > abs(input_direction.dot(Vector2.UP)):
 				feet_animation_player.play('strafe_left')
@@ -421,16 +424,25 @@ func get_input():
 				velocity += front_direction * - 15
 		
 		if velocity != Vector2.ZERO:
-			if Input.is_action_pressed("run"):
+			if Input.is_action_pressed("run") and stamina > 0:
 				set_state(States.RUNNING)
+				# subtract stamina
+				self.stamina -= 1
 			else:
 				set_state(States.WALKING)
+				if not Input.is_action_pressed("run"):
+					self.stamina += 1
 		else:
 			if Input.is_action_pressed("reload"):
 				set_state(States.RELOADING)
 			else:
 				set_state(States.IDLE)
+				self.stamina += 2
 		
+		if stamina < 0:
+			stamina = 0
+		if stamina > 100:
+			stamina = 100
 		# since both these actions use the mouse click, we'll disable it when in pause menu:
 		
 		if not main_game_node.in_pause_menu and not main_game_node.over_inventory and not main_game_node.viewing_itemview:
