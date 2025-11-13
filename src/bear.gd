@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 const is_player:bool = false
 
+var main_game_node: Node2D
+
 var growl_sounds = [
 	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (1).mp3'),
 	preload('res://assets/horror_sfx_vol_1/Monster Growl/Monster Growl (2).mp3'),
@@ -43,12 +45,15 @@ var aggro: bool = false
 var dead: bool = false
 var health = 100
 
+var last_attacker = null
+
 # function for taking damage	
 
 @rpc("authority", "reliable")
 func take_damage(damage_amount: int, source_peer_id: int) -> void:
 	if not dead:
 		print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
+		last_attacker = main_game_node.get_node(str(source_peer_id))
 		# do other server side game state shit here
 		health = health - damage_amount
 		if health <= 0:
@@ -62,6 +67,7 @@ func take_damage(damage_amount: int, source_peer_id: int) -> void:
 @rpc("any_peer", "call_local")
 func play_hit_animation():
 	aggro = true
+	_set_new_target_direction() # reorient direction
 	get_node("bloodParticles").emitting = true
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.RED, 0.25)
@@ -73,6 +79,8 @@ func play_hit_animation():
 func _ready():
 	
 	self.set_multiplayer_authority(1)
+	
+	main_game_node = get_tree().get_root().get_node('Node2D')
 	
 	# Initialize the randomizer for unique paths each run
 	randomize()
@@ -113,7 +121,11 @@ func _physics_process(delta: float):
 # Function to calculate a new random direction, speed, and reset the timer
 func _set_new_target_direction():
 	# Set a new random time until the next direction change
-	time_until_change = randf_range(MIN_CHANGE_TIME, MAX_CHANGE_TIME)
+	if not aggro:
+		time_until_change = randf_range(MIN_CHANGE_TIME, MAX_CHANGE_TIME)
+	elif aggro:
+		# changes orietntation more frequently
+		time_until_change = randf_range(0, 1)
 	
 	# NEW: Set a new random speed
 	current_speed = randf_range(MIN_SPEED, MAX_SPEED)
@@ -121,11 +133,16 @@ func _set_new_target_direction():
 	# adjust rate of walking animation to correspond to this speed
 	get_node('AnimatedSprite2D').speed_scale = current_speed / SPEED
 	
-	# Generate a random angle from 0 to 45 degrees 
-	var random_angle = randf_range(-PI/2, PI/2)
-	
-	# Convert the angle into a normalized direction vector
-	target_direction = Vector2.from_angle(random_angle)
+	# idle directions
+	if not aggro:
+		# Generate a random angle from 0 to 45 degrees 
+		var random_angle = randf_range(-PI/2, PI/2)
+		
+		# Convert the angle into a normalized direction vector
+		target_direction = Vector2.from_angle(random_angle)
+	elif aggro:
+		# directed directions towards player
+		target_direction = (last_attacker.global_position - self.position).normalized()
 	
 	#print("New speed: ", current_speed, ". Next change in: ", time_until_change, "s")
 
