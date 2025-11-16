@@ -8,6 +8,7 @@ var viewing_itemview:bool = false
 const is_player:bool = true
 
 func _ready() -> void:
+	get_node('UI/titlecard').visible = false
 	get_node('UI/role').text = Networking.ROLE
 	get_node('UI/id').text = str(get_tree().get_multiplayer().get_unique_id())
 
@@ -20,6 +21,10 @@ func update_inventory(inventory) -> void:
 		var slot = INVENTORY_SLOT.instantiate()
 		slot.prepare(item)
 		get_node('UI/inventory').add_child(slot)
+	
+func flash_title(title:String = 'default title'):
+	get_node('UI/titlecard').text = title
+	get_node('UI/titlecard/AnimationPlayer').play('flash_title')
 		
 func _input(_event: InputEvent):
 	if Input.is_action_just_released("chat"):

@@ -232,7 +232,7 @@ func take_damage(damage_amount: int, source_peer_id) -> void:
 		print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
 		# do other server side game state shit here
 		play_hit_animation.rpc(damage_amount) # calls this function on all connected peers
-	
+		
 @rpc("any_peer", "call_local")		
 func play_hit_animation(damage_amount):
 	# the peer that runs this and has authority will actually update their health
@@ -249,6 +249,7 @@ func play_hit_animation(damage_amount):
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	
+@warning_ignore("shadowed_variable_base_class")
 func _set_scaled_cursor(scale: float):
 	if not original_cursor_image:
 		return
@@ -290,7 +291,7 @@ func add_item_to_inventory(item_data):
 
 # only removes the first occurence of the item
 func remove_item_from_inventory(given_item_name):
-	if not dead:
+	if not dead and is_multiplayer_authority():
 		#print('trynna remove ' + given_item_name)
 		var index = null
 		for i in range(inventory_items.size()):
@@ -340,39 +341,41 @@ func _ready() -> void:
 # for processing input events not related to animation
 
 func advance_inventory_active_item():
-	inventory_items[current_inventory_item_index].active = false
-	if current_inventory_item_index + 1 > len(inventory_items) - 1:
-		current_inventory_item_index = 0
-	else:
-		current_inventory_item_index += 1
-	inventory_items[current_inventory_item_index].active = true
-	# OPTIONAL: auto turn on flashlight if you switch to it
-	if inventory_items[current_inventory_item_index].name == 'flashlight':
-		get_node('PointLight2D').enabled = true
-		get_node("flashlightOnSound").play()
+	if is_multiplayer_authority():
+		inventory_items[current_inventory_item_index].active = false
+		if current_inventory_item_index + 1 > len(inventory_items) - 1:
+			current_inventory_item_index = 0
+		else:
+			current_inventory_item_index += 1
+		inventory_items[current_inventory_item_index].active = true
+		# OPTIONAL: auto turn on flashlight if you switch to it
+		if inventory_items[current_inventory_item_index].name == 'flashlight':
+			get_node('PointLight2D').enabled = true
+			get_node("flashlightOnSound").play()
 	
-	# call set state with the same state to get the animations to be consistent with flashlight
-	set_state(state, true)
-	
-	# Jack into the GUI and update inventory
-	main_game_node.update_inventory(inventory_items)
+		# call set state with the same state to get the animations to be consistent with flashlight
+		set_state(state, true)
+		
+		# Jack into the GUI and update inventory
+		main_game_node.update_inventory(inventory_items)
 	
 func deadvance_inventory_active_item():
-	inventory_items[current_inventory_item_index].active = false
-	if current_inventory_item_index - 1 < 0:
-		current_inventory_item_index = len(inventory_items) - 1
-	else:
-		current_inventory_item_index -= 1
-	inventory_items[current_inventory_item_index].active = true
-	# auto turn on flashlight if you switch to it
-	if inventory_items[current_inventory_item_index].name == 'flashlight':
-		get_node('PointLight2D').enabled = true
-		get_node("flashlightOnSound").play()
-	# call set state with the same state to get the animations to be consistent with flashlight
-	set_state(state, true)
-	
-	# Jack into the GUI and update inventory
-	main_game_node.update_inventory(inventory_items)
+	if is_multiplayer_authority():
+		inventory_items[current_inventory_item_index].active = false
+		if current_inventory_item_index - 1 < 0:
+			current_inventory_item_index = len(inventory_items) - 1
+		else:
+			current_inventory_item_index -= 1
+		inventory_items[current_inventory_item_index].active = true
+		# auto turn on flashlight if you switch to it
+		if inventory_items[current_inventory_item_index].name == 'flashlight':
+			get_node('PointLight2D').enabled = true
+			get_node("flashlightOnSound").play()
+		# call set state with the same state to get the animations to be consistent with flashlight
+		set_state(state, true)
+		
+		# Jack into the GUI and update inventory
+		main_game_node.update_inventory(inventory_items)
 
 func _input(event: InputEvent) -> void:	
 	if Input.is_action_just_pressed("scroll_up") and not event.ctrl_pressed:
@@ -427,11 +430,27 @@ func _process(delta: float) -> void:
 	# draw the health and stamina bars
 	main_game_node.get_node('UI/healthbar').value = float(self.health) / self.MAX_HEALTH * 100
 	main_game_node.get_node('UI/staminabar').value = float(self.stamina) / self.MAX_STAMINA * 100
+	
+	# handle death if health drops below zero
+	if not dead:
+		if self.health <= 0:
+			self.health = 0
+			dead = true
+			main_game_node.flash_title('You died.')
+			self.respawn()
 
+func respawn(respawn_position: Vector2 = Vector2(0,0)):
+	# todo: make this more complex and check for respawning areas
+	await get_tree().create_timer(3.0).timeout
+	self.position = respawn_position
+	self.dead = false
+	self.health = self.MAX_HEALTH
+	
 func _physics_process(_delta):
 	if not is_multiplayer_authority(): return
-	get_input()
-	move_and_slide()
+	if not dead:
+		get_input()
+		move_and_slide()
 	
 # for dealing with movement input
 func get_input():

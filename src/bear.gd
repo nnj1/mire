@@ -85,6 +85,7 @@ func _ready():
 	self.set_multiplayer_authority(1)
 	
 	main_game_node = get_tree().get_root().get_node('Node2D')
+
 	
 	# Initialize the randomizer for unique paths each run
 	randomize()
@@ -156,7 +157,8 @@ func _set_new_target_direction():
 		target_direction = Vector2.from_angle(random_angle)
 	elif aggro:
 		# directed directions towards player
-		target_direction = (last_attacker.global_position - get_node('Area2D/CollisionShape2D').global_position).normalized()
+		if last_attacker:
+			target_direction = (last_attacker.global_position - get_node('Area2D/CollisionShape2D').global_position).normalized()
 	
 	#print("New speed: ", current_speed, ". Next change in: ", time_until_change, "s")
 
