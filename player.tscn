@@ -1,4 +1,4 @@
-[gd_scene load_steps=453 format=3 uid="uid://xxpj67mfe006"]
+[gd_scene load_steps=454 format=3 uid="uid://xxpj67mfe006"]
 
 [ext_resource type="Script" uid="uid://wsaiqcdtifxa" path="res://src/player.gd" id="1_q2kef"]
 [ext_resource type="Texture2D" uid="uid://73jtl00s0fjl" path="res://assets/Top_Down_Survivor/flashlight/idle/survivor-idle_flashlight_0.png" id="1_smlko"]
@@ -436,6 +436,7 @@
 [ext_resource type="AudioStream" uid="uid://dp2b8gwjr7c1d" path="res://assets/horror sfx/Flashlight on.wav" id="432_u4v43"]
 [ext_resource type="AudioStream" uid="uid://nd5scofelrk8" path="res://assets/horror sfx/Breathing_fast.wav" id="433_aoemw"]
 [ext_resource type="AudioStream" uid="uid://cmc5dcc7t7t2k" path="res://assets/horror sfx/Fluorescent light bulb buzz_2.wav" id="435_ob5km"]
+[ext_resource type="AudioStream" uid="uid://cf43cs8mencnb" path="res://assets/Be Not Afraid UI/--Unholy/Be Not Afraid UI/BNA_UI8.wav" id="437_ovju4"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ob5km"]
 particle_flag_disable_z = true
@@ -1884,6 +1885,12 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath(".:health")
 properties/9/spawn = true
 properties/9/replication_mode = 2
+properties/10/path = NodePath("deathSound:playing")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("walkingSound:playing")
+properties/11/spawn = true
+properties/11/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_5aul4"]
 length = 0.001
@@ -2429,5 +2436,10 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(10, 10)
 shape = SubResource("CircleShape2D_hgg0t")
+
+[node name="deathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("437_ovju4")
+volume_db = 10.0
+bus = &"Sound"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

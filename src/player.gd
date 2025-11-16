@@ -437,6 +437,8 @@ func _process(delta: float) -> void:
 			self.health = 0
 			dead = true
 			main_game_node.flash_title('You died.')
+			if not get_node('deathSound').playing:
+				get_node('deathSound').play()
 			self.respawn()
 
 func respawn(respawn_position: Vector2 = Vector2(0,0)):

@@ -17,5 +17,5 @@ func _process(_delta: float) -> void:
 	pass
 	
 func _on_finished() -> void:
-	self.stream = load('res://assets/music/grimyth - Dark Dungeon Ambience Vol. 2/' + song_titles.pick_random())
+	self.stream = load('res://assets/hiding_place_mp3/' + song_titles.pick_random())
 	self.play()
