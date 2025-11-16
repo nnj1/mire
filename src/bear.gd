@@ -47,6 +47,9 @@ var health = 100
 
 var last_attacker = null
 
+
+var bodies_inside: Array = []
+	
 # function for taking damage	
 
 @rpc("authority", "reliable")
@@ -67,6 +70,7 @@ func take_damage(damage_amount: int, source_peer_id: int) -> void:
 @rpc("any_peer", "call_local")
 func play_hit_animation():
 	aggro = true
+	
 	_set_new_target_direction() # reorient direction
 	get_node("bloodParticles").emitting = true
 	var tween = create_tween()
@@ -96,6 +100,16 @@ func _physics_process(delta: float):
 		return
 		
 	if not dead:
+		
+		# start monitoring the hit box if aggro
+		if aggro:
+			get_node('Area2D').monitoring = true
+			for body in bodies_inside:
+				if 'is_player' in body:
+					if body.is_player:
+						if 'take_damage' in body:
+							body.take_damage(1, self.name)
+							
 		# 1. Countdown the timer
 		time_until_change -= delta
 		
@@ -142,7 +156,7 @@ func _set_new_target_direction():
 		target_direction = Vector2.from_angle(random_angle)
 	elif aggro:
 		# directed directions towards player
-		target_direction = (last_attacker.global_position - self.position).normalized()
+		target_direction = (last_attacker.global_position - get_node('Area2D/CollisionShape2D').global_position).normalized()
 	
 	#print("New speed: ", current_speed, ". Next change in: ", time_until_change, "s")
 
@@ -168,3 +182,12 @@ func _on_timer_timeout() -> void:
 		get_node('growlSound').stream = growl_sounds.pick_random()
 		get_node('growlSound').play()
 		get_node('growlTimer').wait_time = randf_range(3, 8)
+
+# to attack players
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if not bodies_inside.has(body):
+		bodies_inside.append(body)
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if bodies_inside.has(body):
+		bodies_inside.erase(body)

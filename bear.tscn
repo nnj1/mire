@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://gcnhqpgb53sy"]
+[gd_scene load_steps=48 format=3 uid="uid://gcnhqpgb53sy"]
 
 [ext_resource type="Texture2D" uid="uid://boqpsxmecray1" path="res://assets/bear_3D_to_2D/bear_walking/bear1.png" id="1_6wldd"]
 [ext_resource type="Script" uid="uid://thdms44qhm47" path="res://src/bear.gd" id="1_gext2"]
@@ -208,6 +208,10 @@ color = Color(0.558059, 0.0407689, 9.62615e-08, 1)
 color_ramp = SubResource("GradientTexture1D_ofe2f")
 turbulence_enabled = true
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0tj32"]
+radius = 16.666668
+height = 33.333336
+
 [node name="bear" type="CharacterBody2D"]
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_gext2")
@@ -221,9 +225,7 @@ shape = SubResource("CapsuleShape2D_w1yv7")
 z_index = 1
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_x6cto")
-animation = &"dying"
-frame = 6
-frame_progress = 1.0
+animation = &"walk"
 
 [node name="growlSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("32_gext2")
@@ -248,4 +250,15 @@ lifetime = 2.0
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_e1qhy")
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(38.666668, 2.6666667)
+shape = SubResource("CapsuleShape2D_0tj32")
+
 [connection signal="timeout" from="growlTimer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

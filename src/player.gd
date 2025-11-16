@@ -19,7 +19,8 @@ var MAX_HEALTH = 100
 @export var health = 100
 var MAX_STAMINA = 100
 var stamina = 100
-var dead = false
+var dead:bool = false
+var is_player:bool = true
 
 # variables for customizing the mouse cursor (crosshair)
 var original_cursor_image: Image
@@ -226,7 +227,7 @@ func set_state(new_state: int, force: bool = false) -> void:
 
 # function for taking damage	
 @rpc("authority", "reliable")
-func take_damage(damage_amount: int, source_peer_id: int) -> void:
+func take_damage(damage_amount: int, source_peer_id) -> void:
 	if not dead:
 		print(str(name) + ' just took ' + str(damage_amount) + ' damage from ' + str(source_peer_id))
 		# do other server side game state shit here
