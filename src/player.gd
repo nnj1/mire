@@ -288,6 +288,18 @@ func add_item_to_inventory(item_data):
 	if not dead:
 		inventory_items.append(item_data)
 		main_game_node.update_inventory(inventory_items)
+		
+# only removes the first occurence of the item
+func drop_item_from_inventory(given_item_name):
+	if not dead and is_multiplayer_authority():
+		print('trynna drop ' + given_item_name)
+		# TODO: actually send in the item_data for the given item name
+		if not multiplayer.is_server():
+			main_game_node.request_spawn.rpc_id(1, null, self.position)
+		else:
+			main_game_node.request_spawn(null, self.position)
+		# now delete the item from the inventory
+		remove_item_from_inventory(given_item_name)
 
 # only removes the first occurence of the item
 func remove_item_from_inventory(given_item_name):
@@ -338,8 +350,6 @@ func _ready() -> void:
 		# Optionally, disable or ensure the camera is not current for remote players
 		get_node("Camera2D").enabled = false
 
-# for processing input events not related to animation
-
 func advance_inventory_active_item():
 	if is_multiplayer_authority():
 		inventory_items[current_inventory_item_index].active = false
@@ -377,6 +387,7 @@ func deadvance_inventory_active_item():
 		# Jack into the GUI and update inventory
 		main_game_node.update_inventory(inventory_items)
 
+# for processing input events not related to animation
 func _input(event: InputEvent) -> void:	
 	if Input.is_action_just_pressed("scroll_up") and not event.ctrl_pressed:
 		advance_inventory_active_item()

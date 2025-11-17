@@ -97,6 +97,13 @@ func show_item_view(item: Dictionary):
 	get_node('UI/itemview/Panel/VBoxContainer/HBoxContainer/TextureRect').texture = load(item.icon)
 	viewing_itemview = true
 	
+
+func _on_button_2_pressed() -> void:
+	get_node('UI/itemview').visible = false
+	viewing_itemview = false
+	# drop the item from the inventory
+	get_node(str(multiplayer.get_unique_id())).drop_item_from_inventory(get_node('UI/itemview/Panel/VBoxContainer/Label').text)
+	
 func _on_button_3_pressed() -> void:
 	get_node('UI/itemview').visible = false
 	viewing_itemview = false
@@ -138,6 +145,12 @@ func request_pick_up(target_path, source_peer_id: int, source_path):
 			player_node.add_item_to_inventory.rpc_id(source_peer_id, item_data)
 		# delete the target node
 		target_node.queue_free()
+		
+@rpc("any_peer","reliable")
+func request_spawn(item_data, spawn_position: Vector2 = Vector2(0,0)):
+	if not multiplayer.is_server():
+		return
+	get_node('entities/ItemMultiplayerSpawner').call_deferred('spawn',{'item_data': item_data, 'spawn_position':spawn_position})
 
 # exit game button in pause menu
 func _on_button_4_pressed() -> void:
