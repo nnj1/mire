@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PointwiseRandomGaeaMaterial" load_steps=3 format=3 uid="uid://b7vsru2pcksar"]
+
+[ext_resource type="Script" uid="uid://cj08rybcfwlle" path="res://addons/gaea/resources/materials/gaea_material.gd" id="1_0f4ip"]
+[ext_resource type="Script" uid="uid://dtocuov1r8agi" path="res://addons/gaea/resources/materials/distribution/pointwise_random_material.gd" id="3_fjgnc"]
+
+[resource]
+script = ExtResource("3_fjgnc")
+preview_color = Color(0.035936575, 0.5302361, 0.6398965, 1)
+metadata/_custom_type_script = "uid://dtocuov1r8agi"

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bloy4h4i1isrg"]
+
+[ext_resource type="Texture2D" uid="uid://d2y1jm33uoatx" path="res://assets/smma564s53zb1.jpg" id="1_hb0ip"]
+
+[node name="Map1" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = -1400.0
+offset_right = 2048.0
+offset_bottom = 648.0
+texture = ExtResource("1_hb0ip")
