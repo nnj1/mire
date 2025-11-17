@@ -1,3 +1,69 @@
-[gd_scene format=3 uid="uid://lt6qra14yeu"]
+[gd_scene load_steps=8 format=3 uid="uid://lt6qra14yeu"]
+
+[ext_resource type="Texture2D" uid="uid://8ln1fgq0pxrr" path="res://assets/CRAWLING DEPTHS/Terrain/Tiles.png" id="1_br4dw"]
+[ext_resource type="Texture2D" uid="uid://cylohlvodcfsj" path="res://assets/CRAWLING DEPTHS/Terrain/Cracks.png" id="2_apga5"]
+[ext_resource type="Texture2D" uid="uid://bikamtfchpg51" path="res://assets/CRAWLING DEPTHS/Terrain/Cliff.png" id="3_mdv5v"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lfyap"]
+texture = ExtResource("1_br4dw")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_78lay"]
+texture = ExtResource("2_apga5")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ttjoc"]
+texture = ExtResource("3_mdv5v")
+3:5/size_in_atlas = Vector2i(1, 2)
+3:5/0 = 0
+4:5/size_in_atlas = Vector2i(1, 2)
+4:5/0 = 0
+0:3/size_in_atlas = Vector2i(3, 4)
+0:3/0 = 0
+3:3/size_in_atlas = Vector2i(1, 2)
+3:3/0 = 0
+4:3/size_in_atlas = Vector2i(1, 2)
+4:3/0 = 0
+3:1/size_in_atlas = Vector2i(2, 2)
+3:1/0 = 0
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_v8pnx"]
+sources/1 = SubResource("TileSetAtlasSource_lfyap")
+sources/2 = SubResource("TileSetAtlasSource_78lay")
+sources/3 = SubResource("TileSetAtlasSource_ttjoc")
 
 [node name="Map" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_v8pnx")
+format = 2
