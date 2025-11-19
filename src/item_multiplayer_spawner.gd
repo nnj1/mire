@@ -15,7 +15,7 @@ func my_custom_spawn_logic(data: Variant) -> Node:
 	var item_data = data.item_data
 	if item_data == null:
 		item_data = {
-			'name': 'default item',
+			'name': 'default item' + str(randi_range(0,1000)),
 			'description': 'some default shit',
 			'equippable': false,
 			'consumable': false,
