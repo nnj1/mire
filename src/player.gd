@@ -291,8 +291,8 @@ func add_item_to_inventory(item_data):
 		
 # only removes the first occurence of the item
 func drop_item_from_inventory(given_item_name):
-	if not dead and is_multiplayer_authority():
-		print('trynna drop ' + given_item_name)
+	if is_multiplayer_authority() and len(inventory_items) > 1:
+		print('Trynna drop ' + given_item_name)
 		# TODO: actually send in the item_data for the given item name
 		var item_data = Networking.returnDocInList(inventory_items, 'name', given_item_name)
 		if not multiplayer.is_server():
@@ -304,7 +304,7 @@ func drop_item_from_inventory(given_item_name):
 
 # only removes the first occurence of the item
 func remove_item_from_inventory(given_item_name):
-	if not dead and is_multiplayer_authority():
+	if is_multiplayer_authority():
 		#print('trynna remove ' + given_item_name)
 		var index = null
 		for i in range(inventory_items.size()):
@@ -314,7 +314,10 @@ func remove_item_from_inventory(given_item_name):
 				break
 		# now we need to carefully delete the item based on some factors
 		if index != null:
-			if index == current_inventory_item_index:
+			if index == 0 and len(inventory_items) == 1:
+				# do not remove the item, if it's the only one the player has!!
+				return false
+			elif index == current_inventory_item_index:
 				self.advance_inventory_active_item()
 				inventory_items.remove_at(index)
 				# we're now down by an item in the inventory	
@@ -328,6 +331,7 @@ func remove_item_from_inventory(given_item_name):
 				
 		main_game_node.update_inventory(inventory_items)
 		#print(inventory_items)
+		return true
 
 func _ready() -> void:
 	# fill up global variables
@@ -451,6 +455,9 @@ func _process(delta: float) -> void:
 			main_game_node.flash_title('You died.')
 			if not get_node('deathSound').playing:
 				get_node('deathSound').play()
+			# drop all yout items
+			for item in inventory_items:
+				drop_item_from_inventory(item['name'])
 			self.respawn()
 
 func respawn(respawn_position: Vector2 = Vector2(0,0)):

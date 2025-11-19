@@ -8,15 +8,15 @@ func _on_button_pressed() -> void:
 
 	
 func _on_button_2_pressed() -> void:
-	Networking.start_client()
+	if Networking.start_client():
 	#await fade_out_menu()
-	get_tree().change_scene_to_file("res://game.tscn")
+		get_tree().change_scene_to_file("res://game.tscn")
 	#Transition.transition_to_scene("res://game.tscn")
 	
 	
 func _on_text_edit_text_changed() -> void:
 	Networking.ADDRESS = get_node('VBoxContainer/HBoxContainer/TextEdit').text
-	Networking.PORT = get_node('VBoxContainer/HBoxContainer/TextEdit').text
+	Networking.PORT = int(get_node('VBoxContainer/HBoxContainer/TextEdit').text)
 
 func fade_out_menu():
 	# CREATE the TWEEN LOCALLY
