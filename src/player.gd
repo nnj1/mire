@@ -294,10 +294,11 @@ func drop_item_from_inventory(given_item_name):
 	if not dead and is_multiplayer_authority():
 		print('trynna drop ' + given_item_name)
 		# TODO: actually send in the item_data for the given item name
+		var item_data = Networking.returnDocInList(inventory_items, 'name', given_item_name)
 		if not multiplayer.is_server():
-			main_game_node.request_spawn.rpc_id(1, null, self.position)
+			main_game_node.request_spawn.rpc_id(1, item_data, self.position)
 		else:
-			main_game_node.request_spawn(null, self.position)
+			main_game_node.request_spawn(item_data, self.position)
 		# now delete the item from the inventory
 		remove_item_from_inventory(given_item_name)
 
